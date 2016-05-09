@@ -14,8 +14,8 @@ interpolate : Scale x a -> Scale y b -> List (Point a b) -> List (InterpolatedPo
 interpolate xScale yScale points =
   List.map
     (Point.interpolate xScale yScale)
-    (filterPointsOutOfDomain xScale yScale points) 
-    
+    (filterPointsOutOfDomain xScale yScale points)
+
 filterPointsOutOfDomain : Scale x a -> Scale y b -> List (Point a b) -> List (Point a b)
 filterPointsOutOfDomain xScale yScale points =
   case points of
@@ -29,11 +29,11 @@ filterPointsOutOfDomain xScale yScale points =
 
 insideDomain : Scale x a -> Scale y b -> Point a b -> Bool
 insideDomain xScale yScale point =
-  Scale.inDomain xScale point.x && Scale.inDomain yScale point.y    
+  Scale.inDomain xScale point.x && Scale.inDomain yScale point.y
 
-toSvg : BoundingBox -> Orient -> List Svg.Attribute -> List (InterpolatedPoint a b) -> List Svg
+toSvg : BoundingBox -> Orient -> List (List Svg.Attribute) -> List (InterpolatedPoint a b) -> List Svg
 toSvg bBox orient additionalAttrs points =
-  List.map (createBar bBox orient additionalAttrs) points
+  List.map2 (createBar bBox orient) additionalAttrs points
 
 createBar : BoundingBox -> Orient -> List Svg.Attribute -> InterpolatedPoint a b -> Svg
 createBar bBox orient additionalAttrs point =

@@ -21,6 +21,9 @@ type alias Plot =
   , title : Title.Model
   }
 
+type alias Points a b p =
+  List { p | x : a, y : b, attrs : List Svg.Attribute}
+
 createPlot : Float -> Float -> Plot
 createPlot w h =
   { dimensions = { width = w, height = h }
@@ -43,13 +46,13 @@ margins : Margins -> Plot -> Plot
 margins m plot =
   { plot | margins = m }
 
-addVerticalBars : List a -> (a -> b) -> (a -> c) -> Scale x b -> Scale y c -> List Svg.Attribute -> Plot -> Plot
-addVerticalBars points getX getY xScale yScale attrs plot =
-  addBars points getX getY xScale yScale attrs Bars.Vertical plot
+addVerticalBars : Points a b point -> Scale x a -> Scale y b -> Plot -> Plot
+addVerticalBars points xScale yScale plot =
+  addBars points xScale yScale Bars.Vertical plot
 
-addHorizontalBars : List a -> (a -> b) -> (a -> c) -> Scale x b -> Scale y c -> List Svg.Attribute -> Plot -> Plot
-addHorizontalBars points getX getY xScale yScale attrs plot =
-  addBars points getX getY xScale yScale attrs Bars.Horizontal plot
+addHorizontalBars : Points a b point -> Scale x a -> Scale y b -> Plot -> Plot
+addHorizontalBars points xScale yScale plot =
+  addBars points xScale yScale Bars.Horizontal plot
 
 addAxis : Axis a b -> Plot -> Plot
 addAxis axis plot =
@@ -84,13 +87,13 @@ toSvg plot =
   in
     svg (plot.attrs ++ events) (svgs)
 
-addBars : List a -> (a -> b) -> (a -> c) -> Scale x b -> Scale y c -> List Svg.Attribute -> Bars.Orient -> Plot -> Plot
-addBars points getX getY xScale yScale attrs orient plot =
+addBars : Points a b point -> Scale x a -> Scale y b -> Bars.Orient -> Plot -> Plot
+addBars points xScale yScale orient plot =
   let
     toSvg = \bBox xScale yScale ->
-      List.map (\p -> { x = getX p, y = getY p }) points
+      List.map (\p -> { x = p.x, y = p.y}) points
         |> Bars.interpolate xScale yScale
-        |> Bars.toSvg bBox orient attrs
+        |> Bars.toSvg bBox orient (List.map (\p -> p.attrs) points)
   in
     addSvgWithTwoScales toSvg xScale yScale plot
 
