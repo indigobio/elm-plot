@@ -100,10 +100,10 @@ addBars points xScale yScale orient plot =
     addSvgWithTwoScales createBar xScale yScale plot
 
 addSvgWithTwoScales : (BoundingBox -> Scale a b -> Scale c d -> List Svg) -> Scale a b -> Scale c d -> Plot -> Plot
-addSvgWithTwoScales toSvg xScale yScale plot =
+addSvgWithTwoScales createSvg xScale yScale plot =
   let
     toSvgWithScales = \bBox ->
-      toSvg bBox (Scale.rescaleX bBox xScale) (Scale.rescaleY bBox yScale)
+      createSvg bBox (Scale.rescaleX bBox xScale) (Scale.rescaleY bBox yScale)
   in
     addSvg toSvgWithScales plot
 
