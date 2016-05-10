@@ -5,7 +5,7 @@ import Plot.Axis as Axis exposing (Axis, Orient)
 import Private.Scale exposing (Scale)
 import Svg exposing (Svg, g, path)
 import Svg.Attributes exposing (d)
-import Private.Extras.Set as Set exposing (Set)
+import Private.Extras.Interval as Interval exposing (Interval)
 import Private.Extras.SvgAttributes exposing (translate)
 import Private.Axis.Ticks as AxisTicks
 import Private.Axis.Title as AxisTitle
@@ -23,17 +23,17 @@ toSvg axis =
           , AxisTitle.createTitle extent axis.orient axis.innerTickSize axis.tickPadding axis.titleAttributes axis.titleOffset axis.title
           ]
 
-calculateAxisExtent : BoundingBox -> Orient -> Set -> Set
-calculateAxisExtent bBox orient set =
+calculateAxisExtent : BoundingBox -> Orient -> Interval -> Interval
+calculateAxisExtent bBox orient interval =
   let
-    extent = Set.extentOf set
+    extent = Interval.extentOf interval
     calc =
       if orient == Axis.Top || orient == Axis.Bottom then
-        Set.create (max extent.start bBox.xStart) (min extent.end bBox.xEnd)
+        Interval.create (max extent.start bBox.xStart) (min extent.end bBox.xEnd)
       else
-        Set.create (max extent.start bBox.yStart) (min extent.end bBox.yEnd)
+        Interval.create (max extent.start bBox.yStart) (min extent.end bBox.yEnd)
   in
-    Set.extentOf(calc)
+    Interval.extentOf(calc)
 
 axisTranslation : BoundingBox -> Orient -> Svg.Attribute
 axisTranslation bBox orient =
@@ -63,7 +63,7 @@ axisSvg axis =
 pathString : BoundingBox -> Scale a b -> Orient -> Int -> String
 pathString bBox scale orient tickSize =
   let
-    extent = Set.extentOf scale.range
+    extent = Interval.extentOf scale.range
     start = extent.start
     end = extent.end
     path = case orient of

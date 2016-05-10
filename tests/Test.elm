@@ -5,7 +5,7 @@ import Test.Private.Axis.ViewTest
 import Test.Private.Axis.TicksTest
 import Test.Private.Axis.TitleTest
 import Test.Private.Scale.LinearTest
-import Test.Private.Extras.SetTest
+import Test.Private.Extras.IntervalTest
 import Test.Private.Extras.FloatTest
 import Test.Private.Scale.OrdinalBandsTest
 import Test.Private.BarsTest
@@ -24,7 +24,7 @@ tests =
     , Test.Private.Scale.OrdinalBandsTest.tests
     , Test.Private.BarsTest.tests
     , Test.Private.BoundingBoxTest.tests
-    , Test.Private.Extras.SetTest.tests
+    , Test.Private.Extras.IntervalTest.tests
     , Test.Private.Scale.UtilsTest.tests
     ]
 

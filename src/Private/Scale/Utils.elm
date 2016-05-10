@@ -4,7 +4,7 @@ import Private.Scale exposing (Scale)
 import Private.PointValue exposing (PointValue)
 import Private.Tick exposing (Tick)
 import Private.BoundingBox exposing (BoundingBox)
-import Private.Extras.Set as Set exposing (Set, Set)
+import Private.Extras.Interval as Interval exposing (Interval, Interval)
 
 type ScaleType = XScale | YScale
 
@@ -36,17 +36,17 @@ inDomain : Scale a b -> b -> Bool
 inDomain scale point =
   scale.inDomain scale.domain point
 
-calculateExtent : BoundingBox -> ScaleType -> Set -> Set
-calculateExtent bBox sType set =
+calculateExtent : BoundingBox -> ScaleType -> Interval -> Interval
+calculateExtent bBox sType interval =
   let
-    extent = Set.extentOf set
+    extent = Interval.extentOf interval
     calc =
       if sType == XScale then
-        Set.create (max extent.start bBox.xStart) (min extent.end bBox.xEnd)
+        Interval.create (max extent.start bBox.xStart) (min extent.end bBox.xEnd)
       else
-        Set.create (max extent.start bBox.yStart) (min extent.end bBox.yEnd)
+        Interval.create (max extent.start bBox.yStart) (min extent.end bBox.yEnd)
   in
-    if Set.isDescending set then
-      Set.reverse calc
+    if Interval.isDescending interval then
+      Interval.reverse calc
     else
       calc

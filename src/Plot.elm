@@ -1,4 +1,9 @@
-module Plot where
+module Plot
+  (createPlot
+  , addTitle, addAttributes, margins
+  , addVerticalBars, addHorizontalBars, addAxis
+  , toSvg
+  ) where
 
 import Svg exposing (svg, Svg)
 import Private.Extras.SvgAttributes exposing (width, height)
@@ -16,7 +21,6 @@ type alias Plot =
   { dimensions: Dimensions
   , margins: Margins
   , svgs: List (BoundingBox -> List Svg)
-  , eventHandlers: List (BoundingBox -> Svg.Attribute)
   , attrs: List Svg.Attribute
   , title : Title.Model
   }
@@ -29,7 +33,6 @@ createPlot w h =
   { dimensions = { width = w, height = h }
   , margins = Margins.init
   , svgs = []
-  , eventHandlers = []
   , attrs = [width w, height h]
   , title = Title.init
   }
@@ -38,8 +41,8 @@ addTitle : String -> List Svg.Attribute -> Plot -> Plot
 addTitle title attrs plot =
   { plot | title = Title.create title attrs }
 
-attributes : List Svg.Attribute -> Plot -> Plot
-attributes attrs plot =
+addAttributes : List Svg.Attribute -> Plot -> Plot
+addAttributes attrs plot =
   { plot | attrs = plot.attrs ++ attrs }
 
 margins : Margins -> Plot -> Plot
@@ -78,24 +81,23 @@ toSvg plot =
   let
     bBox = BoundingBox.from plot.dimensions plot.margins
     plotElements = List.concat (List.map (\s -> s bBox) plot.svgs)
-    events = List.map (\s -> s bBox) plot.eventHandlers
     svgs =
       if Title.isEmpty plot.title then
         plotElements
       else
         plotElements ++ [Title.toSvg plot.title bBox]
   in
-    svg (plot.attrs ++ events) (svgs)
+    svg plot.attrs (svgs)
 
 addBars : Points a b point -> Scale x a -> Scale y b -> Bars.Orient -> Plot -> Plot
 addBars points xScale yScale orient plot =
   let
-    toSvg = \bBox xScale yScale ->
+    createBar = \bBox xScale yScale ->
       List.map (\p -> { x = p.x, y = p.y}) points
         |> Bars.interpolate xScale yScale
         |> Bars.toSvg bBox orient (List.map (\p -> p.attrs) points)
   in
-    addSvgWithTwoScales toSvg xScale yScale plot
+    addSvgWithTwoScales createBar xScale yScale plot
 
 addSvgWithTwoScales : (BoundingBox -> Scale a b -> Scale c d -> List Svg) -> Scale a b -> Scale c d -> Plot -> Plot
 addSvgWithTwoScales toSvg xScale yScale plot =
@@ -107,4 +109,4 @@ addSvgWithTwoScales toSvg xScale yScale plot =
 
 addSvg : (BoundingBox -> List Svg) -> Plot -> Plot
 addSvg svg plot =
-  { plot | svgs = List.append plot.svgs [svg] }
+  { plot | svgs = plot.svgs ++ [svg] }

@@ -2,7 +2,7 @@ module Test.Private.Scale.LinearTest where
 
 import Private.Scale.Linear exposing (..)
 import ElmTest exposing (..)
-import Private.Extras.Set as Set
+import Private.Extras.Interval as Interval
 
 tests : Test
 tests =
@@ -19,7 +19,7 @@ interpolateTests =
     range = (0, 16)
     interpolate' =
       \d r v ->
-        interpolate (Set.createFromTuple d) (Set.createFromTuple r) v
+        interpolate (Interval.createFromTuple d) (Interval.createFromTuple r) v
   in
     suite "interpolate"
       [ test "for a regular domain"
@@ -42,7 +42,7 @@ uninterpolateTests =
     domain = (0, 1)
     uninterpolate' =
       \d r v ->
-        uninterpolate (Set.createFromTuple d) (Set.createFromTuple r) v
+        uninterpolate (Interval.createFromTuple d) (Interval.createFromTuple r) v
   in
     suite "uninterpolate"
       [ test "for a regular domain"
@@ -62,7 +62,7 @@ createTicksTests =
     range = (0, 10)
     createTicks' =
       \num d r ->
-        createTicks num (Set.createFromTuple d) (Set.createFromTuple r)
+        createTicks num (Interval.createFromTuple d) (Interval.createFromTuple r)
   in
     suite "createTicks"
       [ test "for a regular domain and 1 tick"
@@ -99,7 +99,7 @@ inDomainTests =
   let
     inDomain' =
       \d v ->
-        inDomain (Set.createFromTuple d) v
+        inDomain (Interval.createFromTuple d) v
   in
     suite "inDomain"
       [ test "in the domain for an ascending domain"

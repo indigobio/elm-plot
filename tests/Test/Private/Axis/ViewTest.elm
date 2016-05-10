@@ -6,8 +6,8 @@ import Plot.Axis as Axis
 import Private.BoundingBox as BoundingBox exposing (BoundingBox)
 import ElmTest exposing (..)
 import Svg.Attributes exposing (transform)
-import Test.TestUtils.Sets exposing (assertSet)
-import Private.Extras.Set as Set
+import Test.TestUtils.Intervals exposing (assertInterval)
+import Private.Extras.Interval as Interval
 
 tests : Test
 tests =
@@ -21,60 +21,60 @@ calculateAxisExtentTests : Test
 calculateAxisExtentTests =
   let
     boundingBox  = BoundingBox.create 5 95 2 97
-    range = Set.createFromTuple (10, 90)
-    descendingRange = Set.createFromTuple (90, 10)
-    largeRange = Set.createFromTuple (0, 100)
-    largeDescending = Set.createFromTuple (100, 0)
+    range = Interval.createFromTuple (10, 90)
+    descendingRange = Interval.createFromTuple (90, 10)
+    largeRange = Interval.createFromTuple (0, 100)
+    largeDescending = Interval.createFromTuple (100, 0)
     calculateExtent' = calculateAxisExtent boundingBox
   in
     suite "calculateAxisExtent"
       [ test "for the x axis and a range fits inside the bounding box"
-          <| assertSet (10, 90)
+          <| assertInterval (10, 90)
           <| calculateExtent' Axis.Top range
       , test "for bottom orient and a range fits inside the bounding box"
-          <| assertSet (10, 90)
+          <| assertInterval (10, 90)
           <| calculateExtent' Axis.Bottom range
       , test "for left orient and a range fits inside the bounding box"
-          <| assertSet (10, 90)
+          <| assertInterval (10, 90)
           <| calculateExtent' Axis.Left range
       , test "for right orient and a range fits inside the bounding box"
-          <| assertSet (10, 90)
+          <| assertInterval (10, 90)
           <| calculateExtent' Axis.Right range
       , test "for the x axis and a descending range fits inside the bounding box"
-          <| assertSet (10, 90)
+          <| assertInterval (10, 90)
           <| calculateExtent' Axis.Top descendingRange
       , test "for bottom orient and a descending range fits inside the bounding box"
-          <| assertSet (10, 90)
+          <| assertInterval (10, 90)
           <| calculateExtent' Axis.Bottom descendingRange
       , test "for left orient and a descending range fits inside the bounding box"
-          <| assertSet (10, 90)
+          <| assertInterval (10, 90)
           <| calculateExtent' Axis.Left descendingRange
       , test "for right orient and a descending range fits inside the bounding box"
-          <| assertSet (10, 90)
+          <| assertInterval (10, 90)
           <| calculateExtent' Axis.Right descendingRange
       , test "for the x axis and a range that does not inside the bounding box"
-          <| assertSet (5, 95)
+          <| assertInterval (5, 95)
           <| calculateExtent' Axis.Top largeRange
       , test "for bottom orient and a range that does not inside the bounding box"
-          <| assertSet (5, 95)
+          <| assertInterval (5, 95)
           <| calculateExtent' Axis.Bottom largeRange
       , test "for left orient and a range that does not inside the bounding box"
-          <| assertSet (2, 97)
+          <| assertInterval (2, 97)
           <| calculateExtent' Axis.Left largeRange
       , test "for right orient and a range that does not inside the bounding box"
-          <| assertSet (2, 97)
+          <| assertInterval (2, 97)
           <| calculateExtent' Axis.Right largeRange
       , test "for the x axis and a descending range that does not inside the bounding box"
-          <| assertSet (5, 95)
+          <| assertInterval (5, 95)
           <| calculateExtent' Axis.Top largeDescending
       , test "for bottom orient and a descending range that does not inside the bounding box"
-          <| assertSet (5, 95)
+          <| assertInterval (5, 95)
           <| calculateExtent' Axis.Bottom largeDescending
       , test "for left orient and a descending range that does not inside the bounding box"
-          <| assertSet (2, 97)
+          <| assertInterval (2, 97)
           <| calculateExtent' Axis.Left largeDescending
       , test "for right orient and a descending range that does not inside the bounding box"
-          <| assertSet (2, 97)
+          <| assertInterval (2, 97)
           <| calculateExtent' Axis.Right largeDescending
       ]
 
