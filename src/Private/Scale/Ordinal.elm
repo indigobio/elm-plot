@@ -2,7 +2,6 @@ module Private.Scale.Ordinal where
 
 import Dict exposing (Dict)
 import Private.Extras.List exposing (find)
-import Private.Extras.String exposing (maybeStringToString)
 import Private.PointValue exposing (PointValue)
 import Private.Tick exposing (Tick)
 
@@ -40,7 +39,7 @@ buildLookup start step width domain dict =
     dict
   else
     let
-      orgValue = maybeStringToString (List.head domain)
+      orgValue = Maybe.withDefault "" (List.head domain)
       pv = { value = start, width = width, originalValue = orgValue }
     in
       buildLookup (start + step) step width (List.drop 1 domain)
