@@ -1,9 +1,12 @@
-module Private.Dimensions where
+module Private.Dimensions exposing (..)
 
-type alias Dimensions = {width: Float, height: Float}
+
+type alias Dimensions =
+    { width : Float, height : Float }
+
 
 create : Float -> Float -> Dimensions
 create w h =
-  { width = w
-  , height = h
-  }
+    { width = w
+    , height = h
+    }
