@@ -1,3 +1,5 @@
-module Private.PointValue where
+module Private.PointValue exposing (..)
 
-type alias PointValue a = { value: Float, width: Float, originalValue : a }
+
+type alias PointValue a =
+    { value : Float, width : Float, originalValue : a }

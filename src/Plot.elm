@@ -1,9 +1,14 @@
 module Plot
-  (createPlot
-  , addTitle, addAttributes, margins
-  , addVerticalBars, addHorizontalBars, addAxis
-  , toSvg
-  ) where
+    exposing
+        ( createPlot
+        , addTitle
+        , addAttributes
+        , margins
+        , addVerticalBars
+        , addHorizontalBars
+        , addAxis
+        , toSvg
+        )
 
 import Svg exposing (svg, Svg)
 import Private.Extras.SvgAttributes exposing (width, height)
@@ -17,96 +22,118 @@ import Private.Bars as Bars exposing (Orient)
 import Private.Axis.View as AxisView
 import Private.Title as Title
 
-type alias Plot =
-  { dimensions: Dimensions
-  , margins: Margins
-  , svgs: List (BoundingBox -> List Svg)
-  , attrs: List Svg.Attribute
-  , title : Title.Model
-  }
 
-type alias Points a b p =
-  List { p | x : a, y : b, attrs : List Svg.Attribute}
+type alias Plot msg =
+    { dimensions : Dimensions
+    , margins : Margins
+    , svgs : List (BoundingBox -> List (Svg msg))
+    , attrs : List (Svg.Attribute msg)
+    , title : Title.Model msg
+    }
 
-createPlot : Float -> Float -> Plot
+
+type alias Points a b p msg =
+    List { p | x : a, y : b, attrs : List (Svg.Attribute msg) }
+
+
+createPlot : Float -> Float -> Plot msg
 createPlot w h =
-  { dimensions = { width = w, height = h }
-  , margins = Margins.init
-  , svgs = []
-  , attrs = [width w, height h]
-  , title = Title.init
-  }
+    { dimensions = { width = w, height = h }
+    , margins = Margins.init
+    , svgs = []
+    , attrs = [ width w, height h ]
+    , title = Title.init
+    }
 
-addTitle : String -> List Svg.Attribute -> Plot -> Plot
+
+addTitle : String -> List (Svg.Attribute msg) -> Plot msg -> Plot msg
 addTitle title attrs plot =
-  { plot | title = Title.create title attrs }
+    { plot | title = Title.create title attrs }
 
-addAttributes : List Svg.Attribute -> Plot -> Plot
+
+addAttributes : List (Svg.Attribute msg) -> Plot msg -> Plot msg
 addAttributes attrs plot =
-  { plot | attrs = plot.attrs ++ attrs }
+    { plot | attrs = plot.attrs ++ attrs }
 
-margins : Margins -> Plot -> Plot
+
+margins : Margins -> Plot msg -> Plot msg
 margins m plot =
-  { plot | margins = m }
+    { plot | margins = m }
 
-addVerticalBars : Points a b point -> Scale x a -> Scale y b -> Plot -> Plot
+
+addVerticalBars : Points a b point msg -> Scale x a -> Scale y b -> Plot msg -> Plot msg
 addVerticalBars points xScale yScale plot =
-  addBars points xScale yScale Bars.Vertical plot
+    addBars points xScale yScale Bars.Vertical plot
 
-addHorizontalBars : Points a b point -> Scale x a -> Scale y b -> Plot -> Plot
+
+addHorizontalBars : Points a b point msg -> Scale x a -> Scale y b -> Plot msg -> Plot msg
 addHorizontalBars points xScale yScale plot =
-  addBars points xScale yScale Bars.Horizontal plot
+    addBars points xScale yScale Bars.Horizontal plot
 
-addAxis : Axis a b -> Plot -> Plot
+
+addAxis : Axis a b msg -> Plot msg -> Plot msg
 addAxis axis plot =
-  let
-    svg = \bBox ->
-      let
-        scale =
-          if axis.orient == Axis.Top || axis.orient == Axis.Bottom then
-            Scale.rescaleX bBox axis.scale
-          else
-            Scale.rescaleY bBox axis.scale
-        a = { axis
-              | scale = scale
-              , boundingBox = bBox
-            }
-      in
-        [ AxisView.toSvg a ]
-  in
-    addSvg svg plot
+    let
+        svg =
+            \bBox ->
+                let
+                    scale =
+                        if axis.orient == Axis.Top || axis.orient == Axis.Bottom then
+                            Scale.rescaleX bBox axis.scale
+                        else
+                            Scale.rescaleY bBox axis.scale
 
-toSvg : Plot -> Svg
+                    a =
+                        { axis
+                            | scale = scale
+                            , boundingBox = bBox
+                        }
+                in
+                    [ AxisView.toSvg a ]
+    in
+        addSvg svg plot
+
+
+toSvg : Plot msg -> Svg msg
 toSvg plot =
-  let
-    bBox = BoundingBox.from plot.dimensions plot.margins
-    plotElements = List.concat (List.map (\s -> s bBox) plot.svgs)
-    svgs =
-      if Title.isEmpty plot.title then
-        plotElements
-      else
-        plotElements ++ [Title.toSvg plot.title bBox]
-  in
-    svg plot.attrs (svgs)
+    let
+        bBox =
+            BoundingBox.from plot.dimensions plot.margins
 
-addBars : Points a b point -> Scale x a -> Scale y b -> Bars.Orient -> Plot -> Plot
+        plotElements =
+            List.concat (List.map (\s -> s bBox) plot.svgs)
+
+        svgs =
+            if Title.isEmpty plot.title then
+                plotElements
+            else
+                plotElements ++ [ Title.toSvg plot.title bBox ]
+    in
+        svg plot.attrs (svgs)
+
+
+addBars : Points a b point msg -> Scale x a -> Scale y b -> Bars.Orient -> Plot msg -> Plot msg
 addBars points xScale yScale orient plot =
-  let
-    createBar = \bBox xScale yScale ->
-      List.map (\p -> { x = p.x, y = p.y}) points
-        |> Bars.interpolate xScale yScale
-        |> Bars.toSvg bBox orient (List.map (\p -> p.attrs) points)
-  in
-    addSvgWithTwoScales createBar xScale yScale plot
+    let
+        createBar =
+            \bBox xScale yScale ->
+                List.map (\p -> { x = p.x, y = p.y }) points
+                    |> Bars.interpolate xScale yScale
+                    |> Bars.toSvg bBox orient (List.map (\p -> p.attrs) points)
+    in
+        addSvgWithTwoScales createBar xScale yScale plot
 
-addSvgWithTwoScales : (BoundingBox -> Scale a b -> Scale c d -> List Svg) -> Scale a b -> Scale c d -> Plot -> Plot
+
+addSvgWithTwoScales : (BoundingBox -> Scale a b -> Scale c d -> List (Svg msg)) -> Scale a b -> Scale c d -> Plot msg -> Plot msg
 addSvgWithTwoScales createSvg xScale yScale plot =
-  let
-    toSvgWithScales = \bBox ->
-      createSvg bBox (Scale.rescaleX bBox xScale) (Scale.rescaleY bBox yScale)
-  in
-    addSvg toSvgWithScales plot
+    let
+        toSvgWithScales =
+            \bBox ->
+                createSvg bBox (Scale.rescaleX bBox xScale) (Scale.rescaleY bBox yScale)
+    in
+        addSvg toSvgWithScales plot
 
-addSvg : (BoundingBox -> List Svg) -> Plot -> Plot
+
+addSvg : (BoundingBox -> List (Svg msg)) -> Plot msg -> Plot msg
 addSvg svg plot =
-  { plot | svgs = plot.svgs ++ [svg] }
+    { plot | svgs = plot.svgs ++ [ svg ] }
