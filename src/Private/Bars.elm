@@ -4,8 +4,8 @@ import Private.Point as Point exposing (Point, InterpolatedPoint)
 import Private.BoundingBox exposing (BoundingBox)
 import Svg exposing (Svg, rect)
 import Private.Scale exposing (Scale)
-import Private.Scale.Utils as Scale
 import Private.Extras.SvgAttributes exposing (x, y, height, width)
+import Private.Points as Points exposing (InterpolatedPoints)
 
 
 type Orient
@@ -17,43 +17,24 @@ type alias PosInfo =
     { x : Float, y : Float, width : Float, height : Float }
 
 
-interpolate : Scale x a -> Scale y b -> List (Point a b) -> List (InterpolatedPoint a b)
+interpolate : Scale x a -> Scale y b -> List (Point a b msg) -> InterpolatedPoints a b msg
 interpolate xScale yScale points =
-    List.map (Point.interpolate xScale yScale)
-        (filterPointsOutOfDomain xScale yScale points)
+    Points.interpolate xScale yScale points
 
 
-filterPointsOutOfDomain : Scale x a -> Scale y b -> List (Point a b) -> List (Point a b)
-filterPointsOutOfDomain xScale yScale points =
-    case points of
-        [] ->
-            points
-
-        hd :: tail ->
-            if insideDomain xScale yScale hd then
-                hd :: filterPointsOutOfDomain xScale yScale tail
-            else
-                filterPointsOutOfDomain xScale yScale tail
+toSvg : BoundingBox -> Orient -> InterpolatedPoints a b msg -> List (Svg msg)
+toSvg bBox orient points =
+    List.map (createBar bBox orient) points
 
 
-insideDomain : Scale x a -> Scale y b -> Point a b -> Bool
-insideDomain xScale yScale point =
-    Scale.inDomain xScale point.x && Scale.inDomain yScale point.y
-
-
-toSvg : BoundingBox -> Orient -> List (List (Svg.Attribute msg)) -> List (InterpolatedPoint a b) -> List (Svg msg)
-toSvg bBox orient additionalAttrs points =
-    List.map2 (createBar bBox orient) additionalAttrs points
-
-
-createBar : BoundingBox -> Orient -> List (Svg.Attribute msg) -> InterpolatedPoint a b -> Svg msg
-createBar bBox orient additionalAttrs point =
-    rect (barAttrs bBox orient additionalAttrs point)
+createBar : BoundingBox -> Orient -> InterpolatedPoint a b msg -> Svg msg
+createBar bBox orient point =
+    rect (barAttrs bBox orient point)
         []
 
 
-barAttrs : BoundingBox -> Orient -> List (Svg.Attribute msg) -> InterpolatedPoint a b -> List (Svg.Attribute msg)
-barAttrs bBox orient additionalAttrs point =
+barAttrs : BoundingBox -> Orient -> InterpolatedPoint a b msg -> List (Svg.Attribute msg)
+barAttrs bBox orient point =
     let
         pos =
             posInfo bBox orient point
@@ -63,10 +44,10 @@ barAttrs bBox orient additionalAttrs point =
         , width pos.width
         , height pos.height
         ]
-            ++ additionalAttrs
+            ++ point.attrs
 
 
-posInfo : BoundingBox -> Orient -> InterpolatedPoint a b -> PosInfo
+posInfo : BoundingBox -> Orient -> InterpolatedPoint a b msg -> PosInfo
 posInfo bBox orient point =
     case orient of
         Vertical ->
