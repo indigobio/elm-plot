@@ -13,7 +13,7 @@ Scales determine how to position your visual elements in a plot. All scales are 
 ### Visual Elements
 Visual Elements are drawn on the plot in they order they are added. This allows you control of what overlaps what in your plot. Do you want your bars to overlap your lines? Then add the lines before you add the bars to the plot.
 
-All visual elements require data so the framework knows where to draw them. Additionally svg attributes can be included along with each piece of data. This allows you to provide additional styles or event handlers for each data point individually. Elm's [svg](http://package.elm-lang.org/packages/elm-lang/svg/latests/) package provides a comprehensive list of the attributes and event handlers than can be provided.
+All visual elements require data so the framework knows where to draw them. Additionally svg attributes can be included along with each piece of data. This allows you to provide additional styles or event handlers for each data point individually. Elm's [svg](http://package.elm-lang.org/packages/elm-lang/svg/latest/) package provides a comprehensive list of the attributes and event handlers than can be provided.
 
 ## Examples
 Examples on how to create and use elm-plots are included in the [examples](examples/) folder. To run these examples checkout this repository, install the dependencies, start `elm-reactor`, and then navigate to the examples in the browser.
