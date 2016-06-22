@@ -35,7 +35,6 @@ create scale orient =
         defaultLineAttrs =
             [ fill "none"
             , stroke "#000"
-            , shapeRendering "crispEdges"
             ]
     in
         { scale = scale
