@@ -1,17 +1,10 @@
-#!/usr/bin/env bash
-# (
-# cd "$(dirname "$0")"
-#
-# read -d '' handler <<- EOF
-# (function(){
-#     var worker = Elm.worker(Elm.Main);
-# })();
-# EOF
-#
-elm-package install -y
-# elm-make --yes --output test.js Test.elm
-# echo "$handler" >> test.js
-# node test.js
-# rm test.js
-# )
-echo "run with elm-reactor for now :'("
+#!/bin/bash
+set -euo pipefail
+
+(
+  cd "$(dirname "$0")"
+  elm-package install -y
+  elm-make Test.elm --yes --output tests.js
+  node tests.js
+  rm -f tests.js
+)
