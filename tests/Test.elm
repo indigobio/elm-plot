@@ -37,4 +37,4 @@ tests =
 
 
 main =
-    runSuiteHtml tests
+    runSuite tests
