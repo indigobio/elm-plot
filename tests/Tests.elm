@@ -1,6 +1,6 @@
-module Main exposing (..)
+module Tests exposing (..)
 
-import ElmTest exposing (..)
+import Test exposing (..)
 import Test.Plot.InterpolationTest
 import Test.Private.Axis.ViewTest
 import Test.Private.Axis.TicksTest
@@ -18,9 +18,9 @@ import Test.Private.PointsTest
 -- TODO autogenerate this file
 
 
-tests : Test
-tests =
-    suite "All Tests"
+all : Test
+all =
+    describe "All Tests"
         [ Test.Plot.InterpolationTest.tests
         , Test.Private.Axis.TicksTest.tests
         , Test.Private.Axis.TitleTest.tests
@@ -34,7 +34,3 @@ tests =
         , Test.Private.Scale.UtilsTest.tests
         , Test.Private.PointsTest.tests
         ]
-
-
-main =
-    runSuite tests
