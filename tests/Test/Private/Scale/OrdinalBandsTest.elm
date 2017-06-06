@@ -87,7 +87,7 @@ uninterpolateTests =
         expected =
             expectedInterpolation domain
     in
-        describe "interpolate"
+        describe "uninterpolate"
             [ test "for inputs that match excatly to a domain value" <|
                 \_ ->
                     List.map (uninterpolate (createMapping 0 0) domain range) [ 0, 40, 80 ]
