@@ -1,6 +1,6 @@
 module BarChart exposing (..)
 
-import Svg exposing (Svg, text, text')
+import Svg exposing (Svg, text, text_)
 import Plot exposing (..)
 import Plot.Scale as Scale
 import Plot.Axis as Axis
@@ -22,7 +22,7 @@ main =
 
 createLabels : SymbolCreator a b msg
 createLabels xPos yPos origX origY attrs =
-    text'
+    text_
         [ x <| toString <| xPos + 60
         , y <| toString <| yPos - 10
         ]
