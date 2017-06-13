@@ -1,9 +1,9 @@
 module Test.TestUtils.Intervals exposing (..)
 
-import ElmTest exposing (..)
+import Expect
 import Private.Extras.Interval as Interval exposing (..)
 
 
-assertInterval : ( Float, Float ) -> Interval -> Assertion
+assertInterval : ( Float, Float ) -> Interval -> Expect.Expectation
 assertInterval tuple =
-    assertEqual (createFromTuple tuple)
+    Expect.equal (createFromTuple tuple)

@@ -1,11 +1,9 @@
 module Private.Title exposing (..)
 
-import Svg exposing (svg, Svg, text', text)
+import Svg exposing (svg, Svg, text_, text)
 import Svg.Attributes exposing (textAnchor)
 import Private.Extras.SvgAttributes exposing (x, y)
 import Private.BoundingBox exposing (BoundingBox)
-import List
-import String
 
 
 type alias Model msg =
@@ -43,5 +41,5 @@ toSvg model bBox =
             else
                 model.attrs
     in
-        text' titleAttrs
+        text_ titleAttrs
             [ text model.title ]

@@ -12,7 +12,6 @@ import Html exposing (Html, select, option, text, div)
 import Html.Attributes exposing (class, value, selected, style)
 import Html.Events exposing (on, targetValue)
 import Json.Decode as Json
-import Html.App exposing (beginnerProgram)
 
 
 type alias Model =
@@ -139,7 +138,7 @@ mkOption ( opt, default ) =
 
 
 main =
-    beginnerProgram
+    Html.beginnerProgram
         { model = init
         , view = view
         , update = update

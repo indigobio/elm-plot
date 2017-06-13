@@ -14,7 +14,7 @@ create start end =
 
 createFromTuple : ( Float, Float ) -> Interval
 createFromTuple interval =
-    create (fst interval) (snd interval)
+    create (Tuple.first interval) (Tuple.second interval)
 
 
 extentOf : Interval -> Interval

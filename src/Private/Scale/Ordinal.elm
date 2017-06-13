@@ -26,11 +26,11 @@ uninterpolate : OrdinalMapping -> Float -> String
 uninterpolate mapping x =
     let
         withinHalfStepSize =
-            (\kv -> (abs (.value (snd kv) - x)) <= mapping.stepSize / 2)
+            (\kv -> (abs (.value (Tuple.second kv) - x)) <= mapping.stepSize / 2)
     in
         case find withinHalfStepSize (Dict.toList mapping.lookup) of
             Just kv ->
-                fst kv
+                Tuple.first kv
 
             Nothing ->
                 ""
@@ -38,7 +38,7 @@ uninterpolate mapping x =
 
 createTicks : OrdinalMapping -> (String -> PointValue String -> Tick) -> List Tick
 createTicks mapping createTick =
-    List.map (\v -> createTick (fst v) (snd v)) <| Dict.toList <| mapping.lookup
+    List.map (\v -> createTick (Tuple.first v) (Tuple.second v)) <| Dict.toList <| mapping.lookup
 
 
 buildLookup : Float -> Float -> Float -> List String -> Dict String (PointValue String) -> Dict String (PointValue String)
@@ -53,5 +53,5 @@ buildLookup start step width domain dict =
             pv =
                 { value = start, width = width, originalValue = orgValue }
         in
-            buildLookup (start + step) step width (List.drop 1 domain)
-                <| Dict.insert orgValue pv dict
+            buildLookup (start + step) step width (List.drop 1 domain) <|
+                Dict.insert orgValue pv dict

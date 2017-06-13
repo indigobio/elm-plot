@@ -9,6 +9,6 @@ ln x =
 roundTo : Float -> Int -> Float
 roundTo x numPlaces =
     if numPlaces > 0 then
-        toFloat (round (x * 10 ^ numPlaces)) / 10 ^ numPlaces
+        toFloat (round (x * toFloat (10 ^ numPlaces))) / toFloat (10 ^ numPlaces)
     else
         x

@@ -1,6 +1,6 @@
 module Private.Axis.Title exposing (..)
 
-import Svg exposing (Svg, text, text')
+import Svg exposing (Svg, text, text_)
 import Svg.Attributes exposing (textAnchor)
 import Plot.Axis as Axis exposing (Orient)
 import Private.Extras.Interval exposing (Interval)
@@ -19,7 +19,7 @@ createTitle extent orient innerTickSize tickPadding attrs offset title =
 
 titleSvg : Interval -> Orient -> Int -> Int -> List (Svg.Attribute msg) -> Maybe Int -> String -> Svg msg
 titleSvg extent orient innerTickSize tickPadding attrs offset title =
-    text' (titleAttrs extent orient innerTickSize tickPadding attrs offset)
+    text_ (titleAttrs extent orient innerTickSize tickPadding attrs offset)
         [ text title ]
 
 
@@ -38,10 +38,10 @@ titleAttrs extent orient innerTickSize tickPadding attrs offset =
         calOffset =
             case offset of
                 Just o ->
-                    sign * o
+                    toFloat (sign * o)
 
                 Nothing ->
-                    sign * (innerTickSize + tickPadding + 30)
+                    toFloat (sign * (innerTickSize + tickPadding + 30))
 
         posAttrs =
             if orient == Axis.Top || orient == Axis.Bottom then

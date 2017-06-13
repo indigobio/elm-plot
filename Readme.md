@@ -26,10 +26,10 @@ elm reactor
 ```
 
 ## Tests
-Unit tests are written for logic other than the outputted svg using [elm-test](https://github.com/deadfoxygrandpa/elm-test).
+Unit tests are written for logic other than the outputted svg using [elm-test](https://github.com/elm-community/elm-test).
 
 Test can be ran by:
 
 ``` bash
-tests/run-tests.sh
+elm-test
 ```

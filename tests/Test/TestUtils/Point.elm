@@ -10,4 +10,4 @@ createPoints points =
 
 createPoint : ( Float, Float ) -> Point Float Float msg
 createPoint point =
-    Point.create (fst point) (snd point) []
+    Point.create (Tuple.first point) (Tuple.second point) []

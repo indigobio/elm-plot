@@ -17,8 +17,8 @@ toSvg axis =
         extent =
             calculateAxisExtent axis.boundingBox axis.orient axis.scale.range
     in
-        g [ axisTranslation axis.boundingBox axis.orient ]
-            <| List.concat
+        g [ axisTranslation axis.boundingBox axis.orient ] <|
+            List.concat
                 [ [ axisSvg axis ]
                 , AxisTicks.createTicks axis
                 , AxisTitle.createTitle extent axis.orient axis.innerTickSize axis.tickPadding axis.titleAttributes axis.titleOffset axis.title
