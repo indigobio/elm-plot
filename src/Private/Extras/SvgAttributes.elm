@@ -6,12 +6,12 @@ import Svg.Attributes exposing (transform)
 
 translate : ( number, number ) -> Svg.Attribute msg
 translate pos =
-    transform <| "translate(" ++ (toString (Tuple.first pos)) ++ "," ++ (toString (Tuple.second pos)) ++ ")"
+    transform <| "translate(" ++ toString (Tuple.first pos) ++ "," ++ toString (Tuple.second pos) ++ ")"
 
 
 rotate : ( number, number ) -> Int -> Svg.Attribute msg
 rotate pos rotation =
-    transform <| "rotate(" ++ (toString rotation) ++ "," ++ (toString (Tuple.first pos)) ++ "," ++ (toString (Tuple.second pos)) ++ ")"
+    transform <| "rotate(" ++ toString rotation ++ "," ++ toString (Tuple.first pos) ++ "," ++ toString (Tuple.second pos) ++ ")"
 
 
 x1 : number -> Svg.Attribute msg

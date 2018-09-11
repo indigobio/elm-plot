@@ -1,8 +1,8 @@
 module Test.Private.Extras.IntervalTest exposing (..)
 
+import Expect
 import Private.Extras.Interval as Interval exposing (..)
 import Test exposing (..)
-import Expect
 import Test.TestUtils.Intervals exposing (assertInterval)
 
 

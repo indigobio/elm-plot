@@ -1,12 +1,12 @@
 module Private.Axis.Ticks exposing (..)
 
-import Plot.Axis as Axis exposing (Orient, Axis)
-import Private.Tick exposing (Tick)
-import Private.Scale.Utils as Scale
+import Plot.Axis as Axis exposing (Axis, Orient)
+import Private.Extras.SvgAttributes exposing (rotate, translate, x, x2, y, y2)
 import Private.Scale exposing (Scale)
-import Svg exposing (Svg, path, text_, g, line)
+import Private.Scale.Utils as Scale
+import Private.Tick exposing (Tick)
+import Svg exposing (Svg, g, line, path, text_)
 import Svg.Attributes exposing (dy, textAnchor)
-import Private.Extras.SvgAttributes exposing (translate, rotate, y2, x2, x, y)
 
 
 type alias TickInfo =
@@ -23,7 +23,7 @@ createTicks axis =
 createTick : Axis a b msg -> TickInfo -> Svg msg
 createTick axis tickInfo =
     g [ translate tickInfo.translation ]
-        [ line ((innerTickLineAttributes axis.orient axis.innerTickSize) ++ axis.innerTickAttributes) []
+        [ line (innerTickLineAttributes axis.orient axis.innerTickSize ++ axis.innerTickAttributes) []
         , text_ (labelAttributes axis.orient axis.innerTickSize axis.tickPadding axis.labelRotation)
             [ Svg.text tickInfo.label ]
         ]
@@ -56,10 +56,10 @@ labelAttributes orient tickSize tickPadding rotation =
                 Axis.Right ->
                     [ dy ".32em", textAnchor "start" ]
     in
-        if rotation == 0 then
-            posAttrs ++ anchorAttrs
-        else
-            posAttrs ++ anchorAttrs ++ [ rotate pos rotation ]
+    if rotation == 0 then
+        posAttrs ++ anchorAttrs
+    else
+        posAttrs ++ anchorAttrs ++ [ rotate pos rotation ]
 
 
 innerTickLineAttributes : Orient -> Int -> List (Svg.Attribute msg)
@@ -68,7 +68,7 @@ innerTickLineAttributes orient tickSize =
         pos =
             innerTickLinePos orient tickSize
     in
-        [ x2 (Tuple.first pos), y2 (Tuple.second pos) ]
+    [ x2 (Tuple.first pos), y2 (Tuple.second pos) ]
 
 
 innerTickLinePos : Orient -> Int -> ( Int, Int )
@@ -101,4 +101,4 @@ createTickInfo scale orient tick =
             else
                 ( 0, tick.position )
     in
-        { label = tick.label, translation = translation }
+    { label = tick.label, translation = translation }

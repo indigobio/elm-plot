@@ -1,7 +1,7 @@
 module Private.BoundingBox exposing (..)
 
-import Private.Margins exposing (Margins)
 import Private.Dimensions exposing (Dimensions)
+import Private.Margins exposing (Margins)
 
 
 type alias BoundingBox =
@@ -35,9 +35,9 @@ from dim marg =
                 marg.top
                 (dim.height - marg.bottom)
     in
-        if bBox.xStart > bBox.xEnd then
-            init
-        else if bBox.yStart > bBox.yEnd then
-            init
-        else
-            bBox
+    if bBox.xStart > bBox.xEnd then
+        init
+    else if bBox.yStart > bBox.yEnd then
+        init
+    else
+        bBox

@@ -1,9 +1,9 @@
-module Private.Scale.Linear exposing (interpolate, createTicks, uninterpolate, inDomain)
+module Private.Scale.Linear exposing (createTicks, inDomain, interpolate, uninterpolate)
 
 import Private.Extras.Float exposing (ln, roundTo)
+import Private.Extras.Interval as Interval exposing (Interval)
 import Private.PointValue exposing (PointValue)
 import Private.Tick as Tick exposing (Tick)
-import Private.Extras.Interval as Interval exposing (Interval)
 
 
 interpolate : Interval -> Interval -> Float -> PointValue Float
@@ -15,7 +15,7 @@ interpolate domain range x =
             else
                 (((x - domain.start) * (range.end - range.start)) / (domain.end - domain.start)) + range.start
     in
-        { value = value, width = 0, originalValue = x }
+    { value = value, width = 0, originalValue = x }
 
 
 uninterpolate : Interval -> Interval -> Float -> Float
@@ -30,9 +30,9 @@ inDomain : Interval -> Float -> Bool
 inDomain domain x =
     let
         extent =
-            Interval.extentOf (domain)
+            Interval.extentOf domain
     in
-        (x >= extent.start) && (x <= extent.end)
+    (x >= extent.start) && (x <= extent.end)
 
 
 
@@ -49,13 +49,13 @@ createTicks numTicks domain range =
             stepSize extent (toFloat numTicks)
 
         min =
-            (toFloat (ceiling (extent.start / step))) * step
+            toFloat (ceiling (extent.start / step)) * step
 
         max =
-            (toFloat (floor (extent.end / step))) * step + step * 0.5
+            toFloat (floor (extent.end / step)) * step + step * 0.5
     in
-        makeTicks min max step
-            |> List.map (createTick (significantDigits step) domain range)
+    makeTicks min max step
+        |> List.map (createTick (significantDigits step) domain range)
 
 
 createTick : Int -> Interval -> Interval -> Float -> Tick
@@ -71,19 +71,19 @@ stepSize extent numTicks =
             Interval.span extent
 
         step =
-            toFloat (10 ^ (floor ((ln (span / numTicks) / ln 10))))
+            toFloat (10 ^ floor (ln (span / numTicks) / ln 10))
 
         err =
             numTicks / span * step
     in
-        if err <= 0.15 then
-            step * 10
-        else if err < 0.35 then
-            step * 5
-        else if err < 0.75 then
-            step * 2
-        else
-            step
+    if err <= 0.15 then
+        step * 10
+    else if err < 0.35 then
+        step * 5
+    else if err < 0.75 then
+        step * 2
+    else
+        step
 
 
 makeTicks : Float -> Float -> Float -> List Float
@@ -96,4 +96,4 @@ makeTicks min max step =
 
 significantDigits : Float -> Int
 significantDigits step =
-    negate (floor ((ln step) / (ln 10) + 0.01))
+    negate (floor (ln step / ln 10 + 0.01))

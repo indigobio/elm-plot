@@ -1,8 +1,8 @@
 module Private.Point exposing (..)
 
-import Private.Scale.Utils as Scale
-import Private.Scale exposing (Scale)
 import Private.PointValue exposing (PointValue)
+import Private.Scale exposing (Scale)
+import Private.Scale.Utils as Scale
 import Svg
 
 

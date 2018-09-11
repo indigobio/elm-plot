@@ -1,11 +1,11 @@
 module Private.Bars exposing (..)
 
-import Private.Point as Point exposing (Point, InterpolatedPoint)
 import Private.BoundingBox exposing (BoundingBox)
-import Svg exposing (Svg, rect)
-import Private.Scale exposing (Scale)
-import Private.Extras.SvgAttributes exposing (x, y, height, width)
+import Private.Extras.SvgAttributes exposing (height, width, x, y)
+import Private.Point as Point exposing (InterpolatedPoint, Point)
 import Private.Points as Points exposing (InterpolatedPoints)
+import Private.Scale exposing (Scale)
+import Svg exposing (Svg, rect)
 
 
 type Orient
@@ -39,12 +39,12 @@ barAttrs bBox orient point =
         pos =
             posInfo bBox orient point
     in
-        [ x pos.x
-        , y pos.y
-        , width pos.width
-        , height pos.height
-        ]
-            ++ point.attrs
+    [ x pos.x
+    , y pos.y
+    , width pos.width
+    , height pos.height
+    ]
+        ++ point.attrs
 
 
 posInfo : BoundingBox -> Orient -> InterpolatedPoint a b msg -> PosInfo

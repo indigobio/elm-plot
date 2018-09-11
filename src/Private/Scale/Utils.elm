@@ -1,10 +1,10 @@
 module Private.Scale.Utils exposing (..)
 
-import Private.Scale exposing (Scale)
-import Private.PointValue exposing (PointValue)
-import Private.Tick exposing (Tick)
 import Private.BoundingBox exposing (BoundingBox)
-import Private.Extras.Interval as Interval exposing (Interval, Interval)
+import Private.Extras.Interval as Interval exposing (Interval)
+import Private.PointValue exposing (PointValue)
+import Private.Scale exposing (Scale)
+import Private.Tick exposing (Tick)
 
 
 type ScaleType
@@ -59,7 +59,7 @@ calculateExtent bBox sType interval =
             else
                 Interval.create (max extent.start bBox.yStart) (min extent.end bBox.yEnd)
     in
-        if Interval.isDescending interval then
-            Interval.reverse calc
-        else
-            calc
+    if Interval.isDescending interval then
+        Interval.reverse calc
+    else
+        calc
