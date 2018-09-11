@@ -1,12 +1,12 @@
-module Plot.Symbols exposing (circle, square, diamond, triangleUp, triangleDown, cross)
+module Plot.Symbols exposing (circle, cross, diamond, square, triangleDown, triangleUp)
 
-import Svg exposing (Svg, g, line)
-import Svg.Attributes exposing (d, stroke, strokeWidth)
 import Plot.Interpolation exposing (linear)
+import Plot.SymbolCreator exposing (SymbolCreator)
+import Private.Extras.SvgAttributes exposing (cx, cy, height, r, rotate, width, x, x1, x2, y, y1, y2)
 import Private.Point as Point
 import Private.Points exposing (Points)
-import Private.Extras.SvgAttributes exposing (rotate, cx, cy, r, x, y, width, height, x1, x2, y1, y2)
-import Plot.SymbolCreator exposing (SymbolCreator)
+import Svg exposing (Svg, g, line)
+import Svg.Attributes exposing (d, stroke, strokeWidth)
 
 
 circle : Int -> SymbolCreator a b msg
@@ -34,9 +34,9 @@ diamond : Float -> SymbolCreator a b msg
 diamond length xPos yPos origX origY additionalAttrs =
     let
         attrs =
-            (rotate ( xPos, yPos ) 45) :: additionalAttrs
+            rotate ( xPos, yPos ) 45 :: additionalAttrs
     in
-        square length xPos yPos origX origY attrs
+    square length xPos yPos origX origY attrs
 
 
 triangleUp : Float -> SymbolCreator a b msg
@@ -61,28 +61,28 @@ cross : Float -> SymbolCreator a b msg
 cross length xPos yPos origX origY additionalAttrs =
     let
         attrs =
-            (stroke "black") :: additionalAttrs
+            stroke "black" :: additionalAttrs
     in
-        g []
-            [ line
-                ([ x1 (xPos - length / 2)
-                 , y1 (yPos - length / 2)
-                 , x2 (xPos + length / 2)
-                 , y2 (yPos + length / 2)
-                 ]
-                    ++ attrs
-                )
-                []
-            , line
-                ([ x1 (xPos - length / 2)
-                 , y1 (yPos + length / 2)
-                 , x2 (xPos + length / 2)
-                 , y2 (yPos - length / 2)
-                 ]
-                    ++ attrs
-                )
-                []
-            ]
+    g []
+        [ line
+            ([ x1 (xPos - length / 2)
+             , y1 (yPos - length / 2)
+             , x2 (xPos + length / 2)
+             , y2 (yPos + length / 2)
+             ]
+                ++ attrs
+            )
+            []
+        , line
+            ([ x1 (xPos - length / 2)
+             , y1 (yPos + length / 2)
+             , x2 (xPos + length / 2)
+             , y2 (yPos - length / 2)
+             ]
+                ++ attrs
+            )
+            []
+        ]
 
 
 pathSvg : List (Svg.Attribute msg) -> Points Float Float msg -> Svg msg

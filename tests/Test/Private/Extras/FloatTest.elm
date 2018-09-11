@@ -1,8 +1,8 @@
 module Test.Private.Extras.FloatTest exposing (..)
 
+import Expect
 import Private.Extras.Float exposing (..)
 import Test exposing (..)
-import Expect
 
 
 tests : Test
@@ -34,22 +34,22 @@ roundTests =
     describe "roundTo"
         [ test "rounding float with no decimal places" <|
             \_ ->
-                (roundTo 3 0)
+                roundTo 3 0
                     |> Expect.equal 3
         , test "rounding float with more decimal places than it has" <|
             \_ ->
-                (roundTo 3.1 2)
+                roundTo 3.1 2
                     |> Expect.equal 3.1
         , test "rounding float down" <|
             \_ ->
-                (roundTo 3.14159 2)
+                roundTo 3.14159 2
                     |> Expect.equal 3.14
         , test "rounding float up" <|
             \_ ->
-                (roundTo 3.14159 3)
+                roundTo 3.14159 3
                     |> Expect.equal 3.142
         , test "when given a negative number returns the number" <|
             \_ ->
-                (roundTo 3 -1)
+                roundTo 3 -1
                     |> Expect.equal 3
         ]

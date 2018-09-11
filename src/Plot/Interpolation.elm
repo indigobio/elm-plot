@@ -13,10 +13,10 @@ linear points =
         pointStrings =
             List.map (\p -> toString p.x ++ "," ++ toString p.y) points
     in
-        if List.length points == 1 then
-            join pointStrings ++ "Z"
-        else
-            join (List.intersperse "L" pointStrings)
+    if List.length points == 1 then
+        join pointStrings ++ "Z"
+    else
+        join (List.intersperse "L" pointStrings)
 
 
 join : List String -> String

@@ -1,17 +1,16 @@
 module Symbols exposing (..)
 
-import Svg exposing (Svg)
-import Svg.Attributes exposing (fill)
-import Plot exposing (..)
-import Plot.Scale as Scale
-import Plot.Axis as Axis
-import Plot.Scale exposing (LinearScale)
-import Plot.Symbols exposing (circle, square, diamond, triangleUp, triangleDown, cross)
-import Plot.SymbolCreator exposing (SymbolCreator)
-import Html exposing (Html, select, option, text, div)
-import Html.Attributes exposing (class, value, selected, style)
+import Html exposing (Html, div, option, select, text)
+import Html.Attributes exposing (class, selected, style, value)
 import Html.Events exposing (on, targetValue)
 import Json.Decode as Json
+import Plot exposing (..)
+import Plot.Axis as Axis
+import Plot.Scale as Scale exposing (LinearScale)
+import Plot.SymbolCreator exposing (SymbolCreator)
+import Plot.Symbols exposing (circle, cross, diamond, square, triangleDown, triangleUp)
+import Svg exposing (Svg)
+import Svg.Attributes exposing (fill)
 
 
 type alias Model =
@@ -125,7 +124,7 @@ options =
             , ( "cross", False )
             ]
     in
-        List.map mkOption opts
+    List.map mkOption opts
 
 
 mkOption : ( String, Bool ) -> Html Msg

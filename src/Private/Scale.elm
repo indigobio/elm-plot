@@ -1,8 +1,8 @@
 module Private.Scale exposing (..)
 
 import Private.Extras.Interval as Interval exposing (Interval)
-import Private.Tick exposing (Tick)
 import Private.PointValue exposing (PointValue)
+import Private.Tick exposing (Tick)
 
 
 type alias Scale a b =

@@ -1,10 +1,10 @@
-module Private.Scale.OrdinalBands exposing (interpolate, createTicks, createMapping, uninterpolate, inDomain)
+module Private.Scale.OrdinalBands exposing (createMapping, createTicks, inDomain, interpolate, uninterpolate)
 
-import Private.PointValue exposing (PointValue)
-import Private.Tick as Tick exposing (Tick)
 import Dict exposing (Dict)
 import Private.Extras.Interval exposing (Interval)
+import Private.PointValue exposing (PointValue)
 import Private.Scale.Ordinal as OrdinalScale exposing (OrdinalMapping)
+import Private.Tick as Tick exposing (Tick)
 
 
 interpolate : (List String -> Interval -> OrdinalMapping) -> List String -> Interval -> String -> PointValue String
@@ -42,7 +42,7 @@ createMapping padding outerPadding domain range =
             max range.start range.end
 
         step =
-            (stop - start) / ((toFloat (List.length domain)) - padding + 2 * outerPadding)
+            (stop - start) / (toFloat (List.length domain) - padding + 2 * outerPadding)
 
         bandWidth =
             abs (step * (1 - padding))
@@ -56,6 +56,6 @@ createMapping padding outerPadding domain range =
             else
                 List.reverse domain
     in
-        { lookup = OrdinalScale.buildLookup adjStart step bandWidth adjDomain Dict.empty
-        , stepSize = step
-        }
+    { lookup = OrdinalScale.buildLookup adjStart step bandWidth adjDomain Dict.empty
+    , stepSize = step
+    }

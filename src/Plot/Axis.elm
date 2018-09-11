@@ -1,9 +1,9 @@
 module Plot.Axis exposing (..)
 
+import Private.BoundingBox as BoundingBox exposing (BoundingBox)
 import Private.Scale exposing (Scale)
 import Svg
-import Svg.Attributes exposing (fill, stroke, shapeRendering)
-import Private.BoundingBox as BoundingBox exposing (BoundingBox)
+import Svg.Attributes exposing (fill, shapeRendering, stroke)
 
 
 type Orient
@@ -37,19 +37,19 @@ create scale orient =
             , stroke "#000"
             ]
     in
-        { scale = scale
-        , orient = orient
-        , boundingBox = BoundingBox.init
-        , innerTickSize = 6
-        , outerTickSize = 6
-        , tickPadding = 3
-        , labelRotation = 0
-        , axisAttributes = defaultLineAttrs
-        , innerTickAttributes = defaultLineAttrs
-        , title = Nothing
-        , titleOffset = Nothing
-        , titleAttributes = []
-        }
+    { scale = scale
+    , orient = orient
+    , boundingBox = BoundingBox.init
+    , innerTickSize = 6
+    , outerTickSize = 6
+    , tickPadding = 3
+    , labelRotation = 0
+    , axisAttributes = defaultLineAttrs
+    , innerTickAttributes = defaultLineAttrs
+    , title = Nothing
+    , titleOffset = Nothing
+    , titleAttributes = []
+    }
 
 
 innerTickSize : Int -> Axis a b msg -> Axis a b msg

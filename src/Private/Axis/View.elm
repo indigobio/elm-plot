@@ -1,14 +1,14 @@
 module Private.Axis.View exposing (..)
 
-import Private.BoundingBox exposing (BoundingBox)
 import Plot.Axis as Axis exposing (Axis, Orient)
+import Private.Axis.Ticks as AxisTicks
+import Private.Axis.Title as AxisTitle
+import Private.BoundingBox exposing (BoundingBox)
+import Private.Extras.Interval as Interval exposing (Interval)
+import Private.Extras.SvgAttributes exposing (translate)
 import Private.Scale exposing (Scale)
 import Svg exposing (Svg, g, path)
 import Svg.Attributes exposing (d)
-import Private.Extras.Interval as Interval exposing (Interval)
-import Private.Extras.SvgAttributes exposing (translate)
-import Private.Axis.Ticks as AxisTicks
-import Private.Axis.Title as AxisTitle
 
 
 toSvg : Axis a b msg -> Svg msg
@@ -17,12 +17,12 @@ toSvg axis =
         extent =
             calculateAxisExtent axis.boundingBox axis.orient axis.scale.range
     in
-        g [ axisTranslation axis.boundingBox axis.orient ] <|
-            List.concat
-                [ [ axisSvg axis ]
-                , AxisTicks.createTicks axis
-                , AxisTitle.createTitle extent axis.orient axis.innerTickSize axis.tickPadding axis.titleAttributes axis.titleOffset axis.title
-                ]
+    g [ axisTranslation axis.boundingBox axis.orient ] <|
+        List.concat
+            [ [ axisSvg axis ]
+            , AxisTicks.createTicks axis
+            , AxisTitle.createTitle extent axis.orient axis.innerTickSize axis.tickPadding axis.titleAttributes axis.titleOffset axis.title
+            ]
 
 
 calculateAxisExtent : BoundingBox -> Orient -> Interval -> Interval
@@ -37,7 +37,7 @@ calculateAxisExtent bBox orient interval =
             else
                 Interval.create (max extent.start bBox.yStart) (min extent.end bBox.yEnd)
     in
-        Interval.extentOf (calc)
+    Interval.extentOf calc
 
 
 axisTranslation : BoundingBox -> Orient -> Svg.Attribute msg
@@ -57,7 +57,7 @@ axisTranslation bBox orient =
                 Axis.Right ->
                     ( bBox.xEnd, 0 )
     in
-        translate pos
+    translate pos
 
 
 axisSvg : Axis a b msg -> Svg msg
@@ -67,10 +67,10 @@ axisSvg axis =
             pathString axis.boundingBox axis.scale axis.orient axis.outerTickSize
 
         attrs =
-            (d ps) :: axis.axisAttributes
+            d ps :: axis.axisAttributes
     in
-        path attrs
-            []
+    path attrs
+        []
 
 
 pathString : BoundingBox -> Scale a b -> Orient -> Int -> String
@@ -99,7 +99,7 @@ pathString bBox scale orient tickSize =
                 Axis.Right ->
                     horizontalAxisString bBox tickSize start end
     in
-        "M" ++ path
+    "M" ++ path
 
 
 verticalAxisString : BoundingBox -> Int -> Float -> Float -> String
@@ -111,7 +111,7 @@ verticalAxisString bBox tickLocation xStart xEnd =
         end =
             min xEnd bBox.xEnd
     in
-        (toString start) ++ "," ++ (toString tickLocation) ++ "V0H" ++ (toString end) ++ "V" ++ (toString tickLocation)
+    toString start ++ "," ++ toString tickLocation ++ "V0H" ++ toString end ++ "V" ++ toString tickLocation
 
 
 horizontalAxisString : BoundingBox -> Int -> Float -> Float -> String
@@ -123,4 +123,4 @@ horizontalAxisString bBox tickLocation yStart yEnd =
         end =
             min yEnd bBox.yEnd
     in
-        (toString tickLocation) ++ "," ++ (toString start) ++ "H0V" ++ (toString end) ++ "H" ++ (toString tickLocation)
+    toString tickLocation ++ "," ++ toString start ++ "H0V" ++ toString end ++ "H" ++ toString tickLocation

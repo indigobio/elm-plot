@@ -1,12 +1,11 @@
 module BarChart exposing (..)
 
-import Svg exposing (Svg, text, text_)
 import Plot exposing (..)
-import Plot.Scale as Scale
 import Plot.Axis as Axis
-import Svg.Attributes exposing (fill, x, y)
-import Plot.Scale exposing (LinearScale, OrdinalScale)
+import Plot.Scale as Scale exposing (LinearScale, OrdinalScale)
 import Plot.SymbolCreator exposing (SymbolCreator)
+import Svg exposing (Svg, text, text_)
+import Svg.Attributes exposing (fill, x, y)
 
 
 main : Svg msg

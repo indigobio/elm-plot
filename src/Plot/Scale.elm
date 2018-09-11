@@ -1,9 +1,9 @@
 module Plot.Scale exposing (..)
 
-import Private.Scale.Linear as LinearScaleMethods
-import Private.Scale.OrdinalBands as OrdinalBands
 import Private.Extras.Interval as Interval exposing (Interval)
 import Private.Scale exposing (Scale)
+import Private.Scale.Linear as LinearScaleMethods
+import Private.Scale.OrdinalBands as OrdinalBands
 
 
 type alias LinearScale =
@@ -31,10 +31,10 @@ ordinalBands domain range padding outerPadding =
         mapping =
             OrdinalBands.createMapping padding outerPadding
     in
-        { domain = domain
-        , range = Interval.createFromTuple range
-        , interpolate = OrdinalBands.interpolate mapping
-        , uninterpolate = OrdinalBands.uninterpolate mapping
-        , createTicks = OrdinalBands.createTicks mapping
-        , inDomain = OrdinalBands.inDomain
-        }
+    { domain = domain
+    , range = Interval.createFromTuple range
+    , interpolate = OrdinalBands.interpolate mapping
+    , uninterpolate = OrdinalBands.uninterpolate mapping
+    , createTicks = OrdinalBands.createTicks mapping
+    , inDomain = OrdinalBands.inDomain
+    }
