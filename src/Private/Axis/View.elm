@@ -1,4 +1,4 @@
-module Private.Axis.View exposing (..)
+module Private.Axis.View exposing (axisSvg, axisTranslation, calculateAxisExtent, horizontalAxisString, pathString, toSvg, verticalAxisString)
 
 import Plot.Axis as Axis exposing (Axis, Orient)
 import Private.Axis.Ticks as AxisTicks
@@ -34,6 +34,7 @@ calculateAxisExtent bBox orient interval =
         calc =
             if orient == Axis.Top || orient == Axis.Bottom then
                 Interval.create (max extent.start bBox.xStart) (min extent.end bBox.xEnd)
+
             else
                 Interval.create (max extent.start bBox.yStart) (min extent.end bBox.yEnd)
     in

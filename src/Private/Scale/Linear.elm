@@ -12,6 +12,7 @@ interpolate domain range x =
         value =
             if domain.start == domain.end then
                 range.start
+
             else
                 (((x - domain.start) * (range.end - range.start)) / (domain.end - domain.start)) + range.start
     in
@@ -22,6 +23,7 @@ uninterpolate : Interval -> Interval -> Float -> Float
 uninterpolate domain range y =
     if range.start == range.end then
         domain.start
+
     else
         ((y - range.start) * (domain.end - domain.start) / (range.end - range.start)) + domain.start
 
@@ -78,10 +80,13 @@ stepSize extent numTicks =
     in
     if err <= 0.15 then
         step * 10
+
     else if err < 0.35 then
         step * 5
+
     else if err < 0.75 then
         step * 2
+
     else
         step
 
@@ -90,6 +95,7 @@ makeTicks : Float -> Float -> Float -> List Float
 makeTicks min max step =
     if min >= max then
         []
+
     else
         [ min ] ++ makeTicks (min + step) max step
 

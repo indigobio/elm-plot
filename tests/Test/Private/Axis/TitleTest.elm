@@ -1,4 +1,4 @@
-module Test.Private.Axis.TitleTest exposing (..)
+module Test.Private.Axis.TitleTest exposing (createTitleTests, tests, titleAttrsTests)
 
 import Expect
 import Plot.Axis as Axis

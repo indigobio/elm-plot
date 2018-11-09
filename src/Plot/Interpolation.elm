@@ -15,6 +15,7 @@ linear points =
     in
     if List.length points == 1 then
         join pointStrings ++ "Z"
+
     else
         join (List.intersperse "L" pointStrings)
 

@@ -1,4 +1,4 @@
-module BarChart exposing (..)
+module BarChart exposing (createLabels, main, points, xScale, yScale)
 
 import Plot exposing (..)
 import Plot.Axis as Axis

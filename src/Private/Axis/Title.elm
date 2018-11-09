@@ -1,4 +1,4 @@
-module Private.Axis.Title exposing (..)
+module Private.Axis.Title exposing (createTitle, titleAttrs, titleSvg)
 
 import Plot.Axis as Axis exposing (Orient)
 import Private.Extras.Interval exposing (Interval)
@@ -32,6 +32,7 @@ titleAttrs extent orient innerTickSize tickPadding attrs offset =
         sign =
             if orient == Axis.Top || orient == Axis.Left then
                 -1
+
             else
                 1
 
@@ -46,6 +47,7 @@ titleAttrs extent orient innerTickSize tickPadding attrs offset =
         posAttrs =
             if orient == Axis.Top || orient == Axis.Bottom then
                 [ x middle, y calOffset ]
+
             else
                 [ x calOffset, y middle, rotate ( calOffset, middle ) (sign * 90) ]
     in

@@ -1,4 +1,4 @@
-module Plot.Scale exposing (..)
+module Plot.Scale exposing (LinearScale, OrdinalScale, linear, ordinalBands)
 
 import Private.Extras.Interval as Interval exposing (Interval)
 import Private.Scale exposing (Scale)

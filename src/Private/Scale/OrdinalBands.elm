@@ -53,6 +53,7 @@ createMapping padding outerPadding domain range =
         adjDomain =
             if range.start < range.end then
                 domain
+
             else
                 List.reverse domain
     in

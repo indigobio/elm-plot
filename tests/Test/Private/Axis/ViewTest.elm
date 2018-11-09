@@ -1,4 +1,4 @@
-module Test.Private.Axis.ViewTest exposing (..)
+module Test.Private.Axis.ViewTest exposing (axisTranslationTests, boundingBox, calculateAxisExtentTests, pathStringTests, scale, tests)
 
 import Expect
 import Plot.Axis as Axis

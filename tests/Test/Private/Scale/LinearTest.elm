@@ -1,4 +1,4 @@
-module Test.Private.Scale.LinearTest exposing (..)
+module Test.Private.Scale.LinearTest exposing (createTicksTests, inDomainTests, interpolateTests, tests, uninterpolateTests)
 
 import Expect
 import Private.Extras.Interval as Interval

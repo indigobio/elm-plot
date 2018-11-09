@@ -1,4 +1,4 @@
-module Symbols exposing (..)
+module Symbols exposing (Model, Msg(..), init, main, mkOption, options, plot, points, selectBox, update, view, xScale, yScale)
 
 import Html exposing (Html, div, option, select, text)
 import Html.Attributes exposing (class, selected, style, value)

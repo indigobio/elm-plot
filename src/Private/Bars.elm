@@ -1,4 +1,4 @@
-module Private.Bars exposing (..)
+module Private.Bars exposing (Orient(..), PosInfo, barAttrs, createBar, interpolate, posInfo, toSvg)
 
 import Private.BoundingBox exposing (BoundingBox)
 import Private.Extras.SvgAttributes exposing (height, width, x, y)

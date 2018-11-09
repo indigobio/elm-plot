@@ -1,4 +1,4 @@
-module Test.Private.PointsTest exposing (..)
+module Test.Private.PointsTest exposing (interpolateTests, tests)
 
 import Expect
 import Plot.Scale as Scale

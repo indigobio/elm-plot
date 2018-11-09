@@ -1,4 +1,4 @@
-module Test.Private.BarsTest exposing (..)
+module Test.Private.BarsTest exposing (barAttrsTests, tests)
 
 import Expect
 import Private.Bars exposing (..)

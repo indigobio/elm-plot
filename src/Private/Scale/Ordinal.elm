@@ -1,4 +1,4 @@
-module Private.Scale.Ordinal exposing (..)
+module Private.Scale.Ordinal exposing (OrdinalMapping, buildLookup, createTicks, interpolate, uninterpolate)
 
 import Dict exposing (Dict)
 import Private.Extras.List exposing (find)
@@ -45,6 +45,7 @@ buildLookup : Float -> Float -> Float -> List String -> Dict String (PointValue 
 buildLookup start step width domain dict =
     if List.length domain == 0 then
         dict
+
     else
         let
             orgValue =

@@ -1,4 +1,4 @@
-module Private.Extras.SvgAttributes exposing (..)
+module Private.Extras.SvgAttributes exposing (cx, cy, height, r, rotate, translate, width, x, x1, x2, y, y1, y2)
 
 import Svg
 import Svg.Attributes exposing (transform)

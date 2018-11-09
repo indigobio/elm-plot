@@ -1,4 +1,4 @@
-module Test.Private.Axis.TicksTest exposing (..)
+module Test.Private.Axis.TicksTest exposing (createTickInfosTests, innerTickLineAttributesTests, labelAttributesTests, tests)
 
 import Expect
 import Plot.Axis as Axis

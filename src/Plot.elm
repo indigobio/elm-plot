@@ -1,15 +1,14 @@
-module Plot
-    exposing
-        ( addAttributes
-        , addAxis
-        , addHorizontalBars
-        , addSymbols
-        , addTitle
-        , addVerticalBars
-        , createPlot
-        , margins
-        , toSvg
-        )
+module Plot exposing
+    ( addAttributes
+    , addAxis
+    , addHorizontalBars
+    , addSymbols
+    , addTitle
+    , addVerticalBars
+    , createPlot
+    , margins
+    , toSvg
+    )
 
 import Plot.Axis as Axis exposing (Axis)
 import Plot.SymbolCreator exposing (SymbolCreator)
@@ -101,6 +100,7 @@ addAxis axis plot =
                     scale =
                         if axis.orient == Axis.Top || axis.orient == Axis.Bottom then
                             Scale.rescaleX bBox axis.scale
+
                         else
                             Scale.rescaleY bBox axis.scale
 
@@ -127,6 +127,7 @@ toSvg plot =
         svgs =
             if Title.isEmpty plot.title then
                 plotElements
+
             else
                 plotElements ++ [ Title.toSvg plot.title bBox ]
     in

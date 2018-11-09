@@ -1,4 +1,4 @@
-module Private.Extras.List exposing (..)
+module Private.Extras.List exposing (find)
 
 
 find : (a -> Bool) -> List a -> Maybe a
@@ -10,5 +10,6 @@ find predicate list =
         first :: rest ->
             if predicate first then
                 Just first
+
             else
                 find predicate rest

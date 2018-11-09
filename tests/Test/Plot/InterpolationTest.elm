@@ -1,4 +1,4 @@
-module Test.Plot.InterpolationTest exposing (..)
+module Test.Plot.InterpolationTest exposing (linearTests, tests)
 
 import Expect
 import Plot.Interpolation exposing (..)

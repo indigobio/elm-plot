@@ -1,4 +1,4 @@
-module Test.Private.Scale.OrdinalBandsTest exposing (..)
+module Test.Private.Scale.OrdinalBandsTest exposing (createMappingTests, inDomainTests, interpolateTests, tests, ticksTests, uninterpolateTests)
 
 import Dict exposing (Dict)
 import Expect

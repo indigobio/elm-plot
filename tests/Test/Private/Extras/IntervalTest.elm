@@ -1,4 +1,4 @@
-module Test.Private.Extras.IntervalTest exposing (..)
+module Test.Private.Extras.IntervalTest exposing (extentOfTests, tests)
 
 import Expect
 import Private.Extras.Interval as Interval exposing (..)
