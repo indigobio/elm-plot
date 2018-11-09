@@ -73,12 +73,12 @@ margins m plot =
 addSymbols : Points a b msg -> Scale x a -> Scale y b -> SymbolCreator a b msg -> Plot msg -> Plot msg
 addSymbols points xScale yScale pointToSvg plot =
     let
-        toSvg =
-            \bBox xScale yScale ->
-                Points.interpolate xScale yScale points
+        toSvgHelper =
+            \bBox xScaling yScaling ->
+                Points.interpolate xScaling yScaling points
                     |> Points.toSvg pointToSvg
     in
-    addSvgWithTwoScales toSvg xScale yScale plot
+    addSvgWithTwoScales toSvgHelper xScale yScale plot
 
 
 addVerticalBars : Points a b msg -> Scale x a -> Scale y b -> Plot msg -> Plot msg
@@ -138,8 +138,8 @@ addBars : Points a b msg -> Scale x a -> Scale y b -> Bars.Orient -> Plot msg ->
 addBars points xScale yScale orient plot =
     let
         createBar =
-            \bBox xScale yScale ->
-                Bars.interpolate xScale yScale points
+            \bBox xScaling yScaling ->
+                Bars.interpolate xScaling yScaling points
                     |> Bars.toSvg bBox orient
     in
     addSvgWithTwoScales createBar xScale yScale plot

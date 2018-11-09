@@ -112,7 +112,7 @@ verticalAxisString bBox tickLocation xStart xEnd =
         end =
             min xEnd bBox.xEnd
     in
-    toString start ++ "," ++ toString tickLocation ++ "V0H" ++ toString end ++ "V" ++ toString tickLocation
+    String.fromFloat start ++ "," ++ String.fromInt tickLocation ++ "V0H" ++ String.fromFloat end ++ "V" ++ String.fromInt tickLocation
 
 
 horizontalAxisString : BoundingBox -> Int -> Float -> Float -> String
@@ -124,4 +124,4 @@ horizontalAxisString bBox tickLocation yStart yEnd =
         end =
             min yEnd bBox.yEnd
     in
-    toString tickLocation ++ "," ++ toString start ++ "H0V" ++ toString end ++ "H" ++ toString tickLocation
+    String.fromInt tickLocation ++ "," ++ String.fromFloat start ++ "H0V" ++ String.fromFloat end ++ "H" ++ String.fromInt tickLocation

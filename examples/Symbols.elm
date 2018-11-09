@@ -1,5 +1,6 @@
 module Symbols exposing (Model, Msg(..), init, main, mkOption, options, plot, points, selectBox, update, view, xScale, yScale)
 
+import Browser
 import Html exposing (Html, div, option, select, text)
 import Html.Attributes exposing (class, selected, style, value)
 import Html.Events exposing (on, targetValue)
@@ -56,10 +57,8 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div
-        [ style
-            [ ( "display", "flex" )
-            , ( "flex-direction", "column" )
-            ]
+        [ style "display" "flex"
+        , style "flex-direction" "column"
         ]
         [ plot model
         , selectBox
@@ -103,10 +102,8 @@ points =
 selectBox : Html Msg
 selectBox =
     select
-        [ style
-            [ ( "width", "120px" )
-            , ( "margin-left", "400px" )
-            ]
+        [ style "width" "120px"
+        , style "margin-left" "400px"
         , on "change" (Json.map Select targetValue)
         ]
         options
@@ -137,8 +134,8 @@ mkOption ( opt, default ) =
 
 
 main =
-    Html.beginnerProgram
-        { model = init
+    Browser.sandbox
+        { init = init
         , view = view
         , update = update
         }

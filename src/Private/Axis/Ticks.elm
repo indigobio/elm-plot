@@ -72,20 +72,20 @@ innerTickLineAttributes orient tickSize =
     [ x2 (Tuple.first pos), y2 (Tuple.second pos) ]
 
 
-innerTickLinePos : Orient -> Int -> ( Int, Int )
+innerTickLinePos : Orient -> Int -> ( Float, Float )
 innerTickLinePos orient tickSize =
     case orient of
         Axis.Top ->
-            ( 0, -tickSize )
+            ( 0, toFloat -tickSize )
 
         Axis.Bottom ->
-            ( 0, tickSize )
+            ( 0, toFloat tickSize )
 
         Axis.Left ->
-            ( -tickSize, 0 )
+            ( toFloat -tickSize, 0 )
 
         Axis.Right ->
-            ( tickSize, 0 )
+            ( toFloat tickSize, 0 )
 
 
 createTickInfos : Scale a b -> Orient -> List TickInfo

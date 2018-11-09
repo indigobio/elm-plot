@@ -63,7 +63,7 @@ createTicks numTicks domain range =
 createTick : Int -> Interval -> Interval -> Float -> Tick
 createTick sigDigits domain range position =
     Tick.create (roundTo (interpolate domain range position).value sigDigits)
-        (toString position)
+        (String.fromFloat position)
 
 
 stepSize : Interval -> Float -> Float
