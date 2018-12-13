@@ -1,4 +1,4 @@
-module Test.Private.BoundingBoxTest exposing (..)
+module Test.Private.BoundingBoxTest exposing (fromTests, tests)
 
 import Expect
 import Private.BoundingBox as BoundingBox

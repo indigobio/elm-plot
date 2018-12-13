@@ -1,4 +1,4 @@
-module Plot.SymbolCreator exposing (..)
+module Plot.SymbolCreator exposing (SymbolCreator)
 
 import Svg exposing (Svg)
 

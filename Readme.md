@@ -1,3 +1,9 @@
+# Current Versions
+```
+elm 0.19.0
+elm-format 0.8.1
+```
+
 # elm-plots
 elm-plots is a plotting framework built entirely in elm using svg. It draws inspiration from [d3](https://github.com/mbostock/d3) and [vega](https://github.com/vega/vega). The goal of elm-plots is to make drawing visuals such as plots and charts easy to do.
 
@@ -20,7 +26,6 @@ Examples on how to create and use elm-plots are included in the [examples](examp
 
 ``` bash
 cd examples
-elm package install -y
 elm reactor
 # then navigate to http://localhost:8000/examples/ in a browser to see all examples in action
 ```

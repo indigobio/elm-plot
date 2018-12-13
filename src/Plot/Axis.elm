@@ -1,4 +1,4 @@
-module Plot.Axis exposing (..)
+module Plot.Axis exposing (Axis, Orient(..), axisAttributes, create, innerTickAttributes, innerTickSize, labelRotation, outerTickSize, tickPadding, title, titleAttributes, titleOffset)
 
 import Private.BoundingBox as BoundingBox exposing (BoundingBox)
 import Private.Scale exposing (Scale)

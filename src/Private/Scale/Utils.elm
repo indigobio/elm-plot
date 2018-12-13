@@ -1,4 +1,4 @@
-module Private.Scale.Utils exposing (..)
+module Private.Scale.Utils exposing (ScaleType(..), calculateExtent, createTicks, inDomain, interpolate, rescale, rescaleX, rescaleY, uninterpolate)
 
 import Private.BoundingBox exposing (BoundingBox)
 import Private.Extras.Interval as Interval exposing (Interval)
@@ -56,10 +56,12 @@ calculateExtent bBox sType interval =
         calc =
             if sType == XScale then
                 Interval.create (max extent.start bBox.xStart) (min extent.end bBox.xEnd)
+
             else
                 Interval.create (max extent.start bBox.yStart) (min extent.end bBox.yEnd)
     in
     if Interval.isDescending interval then
         Interval.reverse calc
+
     else
         calc

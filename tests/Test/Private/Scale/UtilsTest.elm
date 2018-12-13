@@ -1,4 +1,4 @@
-module Test.Private.Scale.UtilsTest exposing (..)
+module Test.Private.Scale.UtilsTest exposing (calculateExtentTests, tests)
 
 import Expect
 import Private.BoundingBox as BoundingBox

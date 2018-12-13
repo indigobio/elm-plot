@@ -1,15 +1,14 @@
-module Plot
-    exposing
-        ( addAttributes
-        , addAxis
-        , addHorizontalBars
-        , addSymbols
-        , addTitle
-        , addVerticalBars
-        , createPlot
-        , margins
-        , toSvg
-        )
+module Plot exposing
+    ( addAttributes
+    , addAxis
+    , addHorizontalBars
+    , addSymbols
+    , addTitle
+    , addVerticalBars
+    , createPlot
+    , margins
+    , toSvg
+    )
 
 import Plot.Axis as Axis exposing (Axis)
 import Plot.SymbolCreator exposing (SymbolCreator)
@@ -74,12 +73,12 @@ margins m plot =
 addSymbols : Points a b msg -> Scale x a -> Scale y b -> SymbolCreator a b msg -> Plot msg -> Plot msg
 addSymbols points xScale yScale pointToSvg plot =
     let
-        toSvg =
-            \bBox xScale yScale ->
-                Points.interpolate xScale yScale points
+        toSvgHelper =
+            \bBox xScaling yScaling ->
+                Points.interpolate xScaling yScaling points
                     |> Points.toSvg pointToSvg
     in
-    addSvgWithTwoScales toSvg xScale yScale plot
+    addSvgWithTwoScales toSvgHelper xScale yScale plot
 
 
 addVerticalBars : Points a b msg -> Scale x a -> Scale y b -> Plot msg -> Plot msg
@@ -101,6 +100,7 @@ addAxis axis plot =
                     scale =
                         if axis.orient == Axis.Top || axis.orient == Axis.Bottom then
                             Scale.rescaleX bBox axis.scale
+
                         else
                             Scale.rescaleY bBox axis.scale
 
@@ -127,6 +127,7 @@ toSvg plot =
         svgs =
             if Title.isEmpty plot.title then
                 plotElements
+
             else
                 plotElements ++ [ Title.toSvg plot.title bBox ]
     in
@@ -137,8 +138,8 @@ addBars : Points a b msg -> Scale x a -> Scale y b -> Bars.Orient -> Plot msg ->
 addBars points xScale yScale orient plot =
     let
         createBar =
-            \bBox xScale yScale ->
-                Bars.interpolate xScale yScale points
+            \bBox xScaling yScaling ->
+                Bars.interpolate xScaling yScaling points
                     |> Bars.toSvg bBox orient
     in
     addSvgWithTwoScales createBar xScale yScale plot

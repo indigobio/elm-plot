@@ -1,4 +1,4 @@
-module Test.Private.Extras.FloatTest exposing (..)
+module Test.Private.Extras.FloatTest exposing (lnTests, roundTests, tests)
 
 import Expect
 import Private.Extras.Float exposing (..)

@@ -1,4 +1,4 @@
-module Test.TestUtils.Ordinal exposing (..)
+module Test.TestUtils.Ordinal exposing (expectedInterpolation, expectedMapping, expectedTicks)
 
 import Private.PointValue exposing (PointValue)
 import Private.Tick exposing (Tick)

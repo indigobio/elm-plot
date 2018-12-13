@@ -1,4 +1,4 @@
-module Private.Point exposing (..)
+module Private.Point exposing (InterpolatedPoint, Point, create, interpolate)
 
 import Private.PointValue exposing (PointValue)
 import Private.Scale exposing (Scale)

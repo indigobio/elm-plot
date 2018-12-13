@@ -1,4 +1,4 @@
-module Private.Scale exposing (..)
+module Private.Scale exposing (Scale)
 
 import Private.Extras.Interval as Interval exposing (Interval)
 import Private.PointValue exposing (PointValue)

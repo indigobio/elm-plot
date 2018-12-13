@@ -1,4 +1,4 @@
-module Private.BoundingBox exposing (..)
+module Private.BoundingBox exposing (BoundingBox, create, from, init)
 
 import Private.Dimensions exposing (Dimensions)
 import Private.Margins exposing (Margins)
@@ -37,7 +37,9 @@ from dim marg =
     in
     if bBox.xStart > bBox.xEnd then
         init
+
     else if bBox.yStart > bBox.yEnd then
         init
+
     else
         bBox

@@ -1,4 +1,4 @@
-module Private.Dimensions exposing (..)
+module Private.Dimensions exposing (Dimensions, create)
 
 
 type alias Dimensions =

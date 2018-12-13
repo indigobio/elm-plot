@@ -11,10 +11,11 @@ linear : Interpolation msg
 linear points =
     let
         pointStrings =
-            List.map (\p -> toString p.x ++ "," ++ toString p.y) points
+            List.map (\p -> String.fromFloat p.x ++ "," ++ String.fromFloat p.y) points
     in
     if List.length points == 1 then
         join pointStrings ++ "Z"
+
     else
         join (List.intersperse "L" pointStrings)
 

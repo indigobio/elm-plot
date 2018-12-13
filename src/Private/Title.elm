@@ -1,4 +1,4 @@
-module Private.Title exposing (..)
+module Private.Title exposing (Model, create, init, isEmpty, toSvg)
 
 import Private.BoundingBox exposing (BoundingBox)
 import Private.Extras.SvgAttributes exposing (x, y)
@@ -38,6 +38,7 @@ toSvg model bBox =
                 , x (((bBox.xEnd - bBox.xStart) / 2) + bBox.xStart)
                 , y 30
                 ]
+
             else
                 model.attrs
     in

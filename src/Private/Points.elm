@@ -34,6 +34,7 @@ filterPointsOutOfDomain xScale yScale points =
         hd :: tail ->
             if insideDomain xScale yScale hd then
                 hd :: filterPointsOutOfDomain xScale yScale tail
+
             else
                 filterPointsOutOfDomain xScale yScale tail
 

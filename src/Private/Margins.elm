@@ -1,4 +1,4 @@
-module Private.Margins exposing (..)
+module Private.Margins exposing (Margins, create, init)
 
 
 type alias Margins =

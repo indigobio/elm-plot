@@ -1,4 +1,4 @@
-module Private.Axis.Ticks exposing (..)
+module Private.Axis.Ticks exposing (TickInfo, createTick, createTickInfo, createTickInfos, createTicks, innerTickLineAttributes, innerTickLinePos, labelAttributes)
 
 import Plot.Axis as Axis exposing (Axis, Orient)
 import Private.Extras.SvgAttributes exposing (rotate, translate, x, x2, y, y2)
@@ -58,6 +58,7 @@ labelAttributes orient tickSize tickPadding rotation =
     in
     if rotation == 0 then
         posAttrs ++ anchorAttrs
+
     else
         posAttrs ++ anchorAttrs ++ [ rotate pos rotation ]
 
@@ -71,20 +72,20 @@ innerTickLineAttributes orient tickSize =
     [ x2 (Tuple.first pos), y2 (Tuple.second pos) ]
 
 
-innerTickLinePos : Orient -> Int -> ( Int, Int )
+innerTickLinePos : Orient -> Int -> ( Float, Float )
 innerTickLinePos orient tickSize =
     case orient of
         Axis.Top ->
-            ( 0, -tickSize )
+            ( 0, toFloat -tickSize )
 
         Axis.Bottom ->
-            ( 0, tickSize )
+            ( 0, toFloat tickSize )
 
         Axis.Left ->
-            ( -tickSize, 0 )
+            ( toFloat -tickSize, 0 )
 
         Axis.Right ->
-            ( tickSize, 0 )
+            ( toFloat tickSize, 0 )
 
 
 createTickInfos : Scale a b -> Orient -> List TickInfo
@@ -98,6 +99,7 @@ createTickInfo scale orient tick =
         translation =
             if orient == Axis.Top || orient == Axis.Bottom then
                 ( tick.position, 0 )
+
             else
                 ( 0, tick.position )
     in

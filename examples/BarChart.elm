@@ -1,4 +1,4 @@
-module BarChart exposing (..)
+module BarChart exposing (createLabels, main, points, xScale, yScale)
 
 import Plot exposing (..)
 import Plot.Axis as Axis
@@ -19,13 +19,13 @@ main =
         |> toSvg
 
 
-createLabels : SymbolCreator a b msg
+createLabels : SymbolCreator String Float msg
 createLabels xPos yPos origX origY attrs =
     text_
-        [ x <| toString <| xPos + 60
-        , y <| toString <| yPos - 10
+        [ x <| String.fromFloat <| xPos + 60
+        , y <| String.fromFloat <| yPos - 10
         ]
-        [ text (toString origY) ]
+        [ text (String.fromFloat origY) ]
 
 
 xScale : OrdinalScale
