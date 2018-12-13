@@ -13,7 +13,7 @@ updateVersion(){
 
 updateGemspec(){
     echo -e "\nUpdating version file"
-    local versionPath="${SCRIPT_DIR}/elm-package.json"
+    local versionPath="${SCRIPT_DIR}/elm.json"
     sed -i "s/\(\"version\": \).*/\1\"${VERSION}\"\,/g" "${versionPath}"
     stageFiles "${versionPath}"
 }
