@@ -1,29 +1,28 @@
-module Plot
-    exposing
-        ( createPlot
-        , addTitle
-        , addAttributes
-        , margins
-        , addSymbols
-        , addVerticalBars
-        , addHorizontalBars
-        , addAxis
-        , toSvg
-        )
+module Plot exposing
+    ( addAttributes
+    , addAxis
+    , addHorizontalBars
+    , addSymbols
+    , addTitle
+    , addVerticalBars
+    , createPlot
+    , margins
+    , toSvg
+    )
 
-import Svg exposing (svg, Svg)
-import Private.Extras.SvgAttributes exposing (width, height)
-import Private.Dimensions exposing (Dimensions)
-import Private.Margins as Margins exposing (Margins)
-import Private.BoundingBox as BoundingBox exposing (BoundingBox)
-import Private.Scale.Utils as Scale
-import Private.Scale exposing (Scale)
 import Plot.Axis as Axis exposing (Axis)
-import Private.Bars as Bars exposing (Orient)
-import Private.Axis.View as AxisView
-import Private.Title as Title
-import Private.Points as Points
 import Plot.SymbolCreator exposing (SymbolCreator)
+import Private.Axis.View as AxisView
+import Private.Bars as Bars exposing (Orient)
+import Private.BoundingBox as BoundingBox exposing (BoundingBox)
+import Private.Dimensions exposing (Dimensions)
+import Private.Extras.SvgAttributes exposing (height, width)
+import Private.Margins as Margins exposing (Margins)
+import Private.Points as Points
+import Private.Scale exposing (Scale)
+import Private.Scale.Utils as Scale
+import Private.Title as Title
+import Svg exposing (Svg, svg)
 
 
 type alias Plot msg =
@@ -74,12 +73,12 @@ margins m plot =
 addSymbols : Points a b msg -> Scale x a -> Scale y b -> SymbolCreator a b msg -> Plot msg -> Plot msg
 addSymbols points xScale yScale pointToSvg plot =
     let
-        toSvg =
-            \bBox xScale yScale ->
-                Points.interpolate xScale yScale points
+        toSvgHelper =
+            \bBox xScaling yScaling ->
+                Points.interpolate xScaling yScaling points
                     |> Points.toSvg pointToSvg
     in
-        addSvgWithTwoScales toSvg xScale yScale plot
+    addSvgWithTwoScales toSvgHelper xScale yScale plot
 
 
 addVerticalBars : Points a b msg -> Scale x a -> Scale y b -> Plot msg -> Plot msg
@@ -101,6 +100,7 @@ addAxis axis plot =
                     scale =
                         if axis.orient == Axis.Top || axis.orient == Axis.Bottom then
                             Scale.rescaleX bBox axis.scale
+
                         else
                             Scale.rescaleY bBox axis.scale
 
@@ -110,9 +110,9 @@ addAxis axis plot =
                             , boundingBox = bBox
                         }
                 in
-                    [ AxisView.toSvg a ]
+                [ AxisView.toSvg a ]
     in
-        addSvg svg plot
+    addSvg svg plot
 
 
 toSvg : Plot msg -> Svg msg
@@ -127,21 +127,22 @@ toSvg plot =
         svgs =
             if Title.isEmpty plot.title then
                 plotElements
+
             else
                 plotElements ++ [ Title.toSvg plot.title bBox ]
     in
-        svg plot.attrs (svgs)
+    svg plot.attrs svgs
 
 
 addBars : Points a b msg -> Scale x a -> Scale y b -> Bars.Orient -> Plot msg -> Plot msg
 addBars points xScale yScale orient plot =
     let
         createBar =
-            \bBox xScale yScale ->
-                Bars.interpolate xScale yScale points
+            \bBox xScaling yScaling ->
+                Bars.interpolate xScaling yScaling points
                     |> Bars.toSvg bBox orient
     in
-        addSvgWithTwoScales createBar xScale yScale plot
+    addSvgWithTwoScales createBar xScale yScale plot
 
 
 addSvgWithTwoScales : (BoundingBox -> Scale a b -> Scale c d -> List (Svg msg)) -> Scale a b -> Scale c d -> Plot msg -> Plot msg
@@ -151,7 +152,7 @@ addSvgWithTwoScales createSvg xScale yScale plot =
             \bBox ->
                 createSvg bBox (Scale.rescaleX bBox xScale) (Scale.rescaleY bBox yScale)
     in
-        addSvg toSvgWithScales plot
+    addSvg toSvgWithScales plot
 
 
 addSvg : (BoundingBox -> List (Svg msg)) -> Plot msg -> Plot msg

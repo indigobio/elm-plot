@@ -1,0 +1,21 @@
+{
+    "type": "package",
+    "name": "indigobio/elm-plot",
+    "summary": "some plotting",
+    "license": "BSD-3-Clause",
+    "version": "1.2.0",
+    "exposed-modules": [
+        "Plot",
+        "Plot.Axis",
+        "Plot.Interpolation",
+        "Plot.Scale",
+        "Plot.SymbolCreator",
+        "Plot.Symbols"
+    ],
+    "elm-version": "0.19.0 <= v < 0.20.0",
+    "dependencies": {
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "elm/svg": "1.0.1 <= v < 2.0.0"
+    },
+    "test-dependencies": {}
+}

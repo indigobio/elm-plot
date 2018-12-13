@@ -1,12 +1,11 @@
-module BarChart exposing (..)
+module BarChart exposing (createLabels, main, points, xScale, yScale)
 
-import Svg exposing (Svg, text, text_)
 import Plot exposing (..)
-import Plot.Scale as Scale
 import Plot.Axis as Axis
-import Svg.Attributes exposing (fill, x, y)
-import Plot.Scale exposing (LinearScale, OrdinalScale)
+import Plot.Scale as Scale exposing (LinearScale, OrdinalScale)
 import Plot.SymbolCreator exposing (SymbolCreator)
+import Svg exposing (Svg, text, text_)
+import Svg.Attributes exposing (fill, x, y)
 
 
 main : Svg msg
@@ -20,13 +19,13 @@ main =
         |> toSvg
 
 
-createLabels : SymbolCreator a b msg
+createLabels : SymbolCreator String Float msg
 createLabels xPos yPos origX origY attrs =
     text_
-        [ x <| toString <| xPos + 60
-        , y <| toString <| yPos - 10
+        [ x <| String.fromFloat <| xPos + 60
+        , y <| String.fromFloat <| yPos - 10
         ]
-        [ text (toString origY) ]
+        [ text (String.fromFloat origY) ]
 
 
 xScale : OrdinalScale

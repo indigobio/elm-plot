@@ -1,8 +1,8 @@
-module Private.Points exposing (Points, InterpolatedPoints, interpolate, toSvg)
+module Private.Points exposing (InterpolatedPoints, Points, interpolate, toSvg)
 
-import Private.Scale.Utils as Scale
-import Private.Scale exposing (Scale)
 import Private.Point as Point exposing (InterpolatedPoint, Point)
+import Private.Scale exposing (Scale)
+import Private.Scale.Utils as Scale
 import Svg exposing (Svg, rect)
 
 
@@ -34,6 +34,7 @@ filterPointsOutOfDomain xScale yScale points =
         hd :: tail ->
             if insideDomain xScale yScale hd then
                 hd :: filterPointsOutOfDomain xScale yScale tail
+
             else
                 filterPointsOutOfDomain xScale yScale tail
 

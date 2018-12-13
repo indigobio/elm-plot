@@ -1,4 +1,4 @@
-module Private.Extras.Float exposing (..)
+module Private.Extras.Float exposing (ln, roundTo)
 
 
 ln : Float -> Float
@@ -10,5 +10,6 @@ roundTo : Float -> Int -> Float
 roundTo x numPlaces =
     if numPlaces > 0 then
         toFloat (round (x * toFloat (10 ^ numPlaces))) / toFloat (10 ^ numPlaces)
+
     else
         x

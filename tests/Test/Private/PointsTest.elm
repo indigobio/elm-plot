@@ -1,9 +1,9 @@
-module Test.Private.PointsTest exposing (..)
+module Test.Private.PointsTest exposing (interpolateTests, tests)
 
-import Private.Points exposing (..)
-import Test exposing (..)
 import Expect
 import Plot.Scale as Scale
+import Private.Points exposing (..)
+import Test exposing (..)
 import Test.TestUtils.Point exposing (createPoints)
 
 
@@ -25,17 +25,17 @@ interpolateTests =
         interpolate_ =
             \points -> List.length (interpolate xScale yScale points)
     in
-        describe "interpolate"
-            [ test "points within the domain of the x and y scale are not filtered out" <|
-                \_ ->
-                    interpolate_ (createPoints [ ( 1, 1 ), ( 0.5, 0.5 ) ])
-                        |> Expect.equal (2)
-            , test "points ouside of the x domain are filtered out" <|
-                \_ ->
-                    interpolate_ (createPoints [ ( 1.5, 1 ), ( -1, -1 ) ])
-                        |> Expect.equal (0)
-            , test "points ouside of the y domain are filtered out" <|
-                \_ ->
-                    interpolate_ (createPoints [ ( 1, 1.5 ), ( 1, -2 ) ])
-                        |> Expect.equal (0)
-            ]
+    describe "interpolate"
+        [ test "points within the domain of the x and y scale are not filtered out" <|
+            \_ ->
+                interpolate_ (createPoints [ ( 1, 1 ), ( 0.5, 0.5 ) ])
+                    |> Expect.equal 2
+        , test "points ouside of the x domain are filtered out" <|
+            \_ ->
+                interpolate_ (createPoints [ ( 1.5, 1 ), ( -1, -1 ) ])
+                    |> Expect.equal 0
+        , test "points ouside of the y domain are filtered out" <|
+            \_ ->
+                interpolate_ (createPoints [ ( 1, 1.5 ), ( 1, -2 ) ])
+                    |> Expect.equal 0
+        ]

@@ -1,4 +1,4 @@
-module Private.Tick exposing (..)
+module Private.Tick exposing (Tick, create)
 
 
 type alias Tick =

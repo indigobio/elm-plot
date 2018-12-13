@@ -1,69 +1,69 @@
-module Private.Extras.SvgAttributes exposing (..)
+module Private.Extras.SvgAttributes exposing (cx, cy, height, r, rotate, translate, width, x, x1, x2, y, y1, y2)
 
 import Svg
 import Svg.Attributes exposing (transform)
 
 
-translate : ( number, number ) -> Svg.Attribute msg
+translate : ( Float, Float ) -> Svg.Attribute msg
 translate pos =
-    transform <| "translate(" ++ (toString (Tuple.first pos)) ++ "," ++ (toString (Tuple.second pos)) ++ ")"
+    transform <| "translate(" ++ String.fromFloat (Tuple.first pos) ++ "," ++ String.fromFloat (Tuple.second pos) ++ ")"
 
 
-rotate : ( number, number ) -> Int -> Svg.Attribute msg
+rotate : ( Float, Float ) -> Int -> Svg.Attribute msg
 rotate pos rotation =
-    transform <| "rotate(" ++ (toString rotation) ++ "," ++ (toString (Tuple.first pos)) ++ "," ++ (toString (Tuple.second pos)) ++ ")"
+    transform <| "rotate(" ++ String.fromInt rotation ++ "," ++ String.fromFloat (Tuple.first pos) ++ "," ++ String.fromFloat (Tuple.second pos) ++ ")"
 
 
-x1 : number -> Svg.Attribute msg
-x1 x =
-    Svg.Attributes.x1 (toString x)
+x1 : Float -> Svg.Attribute msg
+x1 xVal =
+    Svg.Attributes.x1 (String.fromFloat xVal)
 
 
-y1 : number -> Svg.Attribute msg
-y1 y =
-    Svg.Attributes.y1 (toString y)
+y1 : Float -> Svg.Attribute msg
+y1 yVal =
+    Svg.Attributes.y1 (String.fromFloat yVal)
 
 
-x2 : number -> Svg.Attribute msg
-x2 x =
-    Svg.Attributes.x2 (toString x)
+x2 : Float -> Svg.Attribute msg
+x2 xVal =
+    Svg.Attributes.x2 (String.fromFloat xVal)
 
 
-y2 : number -> Svg.Attribute msg
-y2 y =
-    Svg.Attributes.y2 (toString y)
+y2 : Float -> Svg.Attribute msg
+y2 yVal =
+    Svg.Attributes.y2 (String.fromFloat yVal)
 
 
-x : number -> Svg.Attribute msg
+x : Float -> Svg.Attribute msg
 x num =
-    Svg.Attributes.x (toString num)
+    Svg.Attributes.x (String.fromFloat num)
 
 
-y : number -> Svg.Attribute msg
+y : Float -> Svg.Attribute msg
 y num =
-    Svg.Attributes.y (toString num)
+    Svg.Attributes.y (String.fromFloat num)
 
 
-width : number -> Svg.Attribute msg
+width : Float -> Svg.Attribute msg
 width w =
-    Svg.Attributes.width (toString w)
+    Svg.Attributes.width (String.fromFloat w)
 
 
-height : number -> Svg.Attribute msg
+height : Float -> Svg.Attribute msg
 height h =
-    Svg.Attributes.height (toString h)
+    Svg.Attributes.height (String.fromFloat h)
 
 
-cx : number -> Svg.Attribute msg
+cx : Float -> Svg.Attribute msg
 cx num =
-    Svg.Attributes.cx (toString num)
+    Svg.Attributes.cx (String.fromFloat num)
 
 
-cy : number -> Svg.Attribute msg
+cy : Float -> Svg.Attribute msg
 cy num =
-    Svg.Attributes.cy (toString num)
+    Svg.Attributes.cy (String.fromFloat num)
 
 
-r : number -> Svg.Attribute msg
+r : Int -> Svg.Attribute msg
 r num =
-    Svg.Attributes.r (toString num)
+    Svg.Attributes.r (String.fromInt num)

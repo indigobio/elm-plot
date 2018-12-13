@@ -1,4 +1,4 @@
-module Private.Extras.Interval exposing (..)
+module Private.Extras.Interval exposing (Interval, create, createFromTuple, extentOf, isAscending, isDescending, reverse, span)
 
 
 type alias Interval =
@@ -21,6 +21,7 @@ extentOf : Interval -> Interval
 extentOf interval =
     if isAscending interval then
         interval
+
     else
         reverse interval
 

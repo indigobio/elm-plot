@@ -1,8 +1,8 @@
-module Private.Point exposing (..)
+module Private.Point exposing (InterpolatedPoint, Point, create, interpolate)
 
-import Private.Scale.Utils as Scale
-import Private.Scale exposing (Scale)
 import Private.PointValue exposing (PointValue)
+import Private.Scale exposing (Scale)
+import Private.Scale.Utils as Scale
 import Svg
 
 

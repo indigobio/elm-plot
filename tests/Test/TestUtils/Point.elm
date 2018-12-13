@@ -1,4 +1,4 @@
-module Test.TestUtils.Point exposing (..)
+module Test.TestUtils.Point exposing (createPoint, createPoints)
 
 import Private.Point as Point exposing (Point)
 

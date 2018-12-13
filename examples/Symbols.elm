@@ -1,17 +1,17 @@
-module Symbols exposing (..)
+module Symbols exposing (Model, Msg(..), init, main, mkOption, options, plot, points, selectBox, update, view, xScale, yScale)
 
-import Svg exposing (Svg)
-import Svg.Attributes exposing (fill)
-import Plot exposing (..)
-import Plot.Scale as Scale
-import Plot.Axis as Axis
-import Plot.Scale exposing (LinearScale)
-import Plot.Symbols exposing (circle, square, diamond, triangleUp, triangleDown, cross)
-import Plot.SymbolCreator exposing (SymbolCreator)
-import Html exposing (Html, select, option, text, div)
-import Html.Attributes exposing (class, value, selected, style)
+import Browser
+import Html exposing (Html, div, option, select, text)
+import Html.Attributes exposing (class, selected, style, value)
 import Html.Events exposing (on, targetValue)
 import Json.Decode as Json
+import Plot exposing (..)
+import Plot.Axis as Axis
+import Plot.Scale as Scale exposing (LinearScale)
+import Plot.SymbolCreator exposing (SymbolCreator)
+import Plot.Symbols exposing (circle, cross, diamond, square, triangleDown, triangleUp)
+import Svg exposing (Svg)
+import Svg.Attributes exposing (fill)
 
 
 type alias Model =
@@ -57,10 +57,8 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div
-        [ style
-            [ ( "display", "flex" )
-            , ( "flex-direction", "column" )
-            ]
+        [ style "display" "flex"
+        , style "flex-direction" "column"
         ]
         [ plot model
         , selectBox
@@ -104,10 +102,8 @@ points =
 selectBox : Html Msg
 selectBox =
     select
-        [ style
-            [ ( "width", "120px" )
-            , ( "margin-left", "400px" )
-            ]
+        [ style "width" "120px"
+        , style "margin-left" "400px"
         , on "change" (Json.map Select targetValue)
         ]
         options
@@ -125,7 +121,7 @@ options =
             , ( "cross", False )
             ]
     in
-        List.map mkOption opts
+    List.map mkOption opts
 
 
 mkOption : ( String, Bool ) -> Html Msg
@@ -138,8 +134,8 @@ mkOption ( opt, default ) =
 
 
 main =
-    Html.beginnerProgram
-        { model = init
+    Browser.sandbox
+        { init = init
         , view = view
         , update = update
         }
